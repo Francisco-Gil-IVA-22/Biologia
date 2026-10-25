@@ -54,6 +54,19 @@
         ::-webkit-scrollbar-track { background: #0f172a; }
         ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #475569; }
+        
+        /* Styled Formula Badges */
+        .chem-badge {
+            font-family: 'Courier New', Courier, monospace;
+            letter-spacing: 0.05em;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(34, 211, 238, 0.3);
+            border-radius: 0.375rem;
+            padding: 0.125rem 0.375rem;
+            color: #38bdf8;
+            font-weight: 700;
+            display: inline-block;
+        }
     </style>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col">
@@ -101,13 +114,13 @@
                     <i class="fa-solid fa-layer-group text-pink-400"></i> Flashcards
                 </button>
                 <button onclick="switchTab('examen')" id="tab-examen" class="tab-btn whitespace-nowrap py-3 px-4 text-slate-300 hover:text-cyan-400 transition flex items-center gap-2">
-                    <i class="fa-solid fa-clipboard-question text-red-400"></i> Simulador Examen
+                    <i class="fa-solid fa-clipboard-question text-red-400"></i> Simulador Examen (20 Preguntas)
                 </button>
             </nav>
         </div>
     </header>
 
-    <!-- SEARCH RESULT BANNER (HIDDEN BY DEFAULT) -->
+    <!-- SEARCH RESULT BANNER -->
     <div id="searchResultBanner" class="hidden bg-slate-900 border-b border-cyan-500/30 px-4 py-3 max-w-7xl mx-auto w-full">
         <div class="flex justify-between items-center text-xs sm:text-sm">
             <span class="text-cyan-300 font-semibold" id="searchCountText">Resultados de búsqueda:</span>
@@ -148,8 +161,8 @@
                     <div class="space-y-3 text-xs text-slate-300">
                         <div class="bg-slate-800/40 p-3 rounded-lg border border-emerald-500/20">
                             <h4 class="font-bold text-cyan-400 mb-1">Potencial de Reposo vs Acción</h4>
-                            <p><strong>Potencial de Reposo (~ -70mV):</strong> Interior cargado negativamente. Mantenido por la <em>Bomba Sodio-Potasio ($Na^+/K^+$)</em> (expulsa $3Na^+$ e ingresa $2K^+$).</p>
-                            <p class="mt-1"><strong>Potencial de Acción:</strong> Al recibir un estímulo, entran iones $Na^+$ despolarizando la membrana.</p>
+                            <p><strong>Potencial de Reposo (~ -70mV):</strong> Interior cargado negativamente. Mantenido por la <em>Bomba Sodio-Potasio</em> (<span class="chem-badge">Na<sup>+</sup></span>/<span class="chem-badge">K<sup>+</sup></span>) que expulsa 3 <span class="chem-badge">Na<sup>+</sup></span> e ingresa 2 <span class="chem-badge">K<sup>+</sup></span>.</p>
+                            <p class="mt-1"><strong>Potencial de Acción:</strong> Al recibir un estímulo, entran iones <span class="chem-badge">Na<sup>+</sup></span> despolarizando la membrana.</p>
                         </div>
                         <div class="bg-slate-800/40 p-3 rounded-lg border border-emerald-500/20">
                             <h4 class="font-bold text-cyan-400 mb-1">Tipos de Sinapsis</h4>
@@ -196,7 +209,7 @@
                         </thead>
                         <tbody class="divide-y divide-slate-800 text-slate-300">
                             <tr><td class="p-2.5 font-bold text-cyan-400">Hipófisis / Pituitaria</td><td class="p-2.5">GH (Crecimiento), TSH, Oxitocina, Prolactina, ACTH</td><td class="p-2.5">Glándula maestra. Regula crecimiento, parto, lactancia y otras glándulas.</td></tr>
-                            <tr><td class="p-2.5 font-bold text-cyan-400">Tiroides</td><td class="p-2.5">T3 (Triyodotironina), T4 (Tiroxina), Calcitonina</td><td class="p-2.5">Regula el metabolismo basal y disminuye el calcio en sangre.</td></tr>
+                            <tr><td class="p-2.5 font-bold text-cyan-400">Tiroides</td><td class="p-2.5">T<sub>3</sub> (Triyodotironina), T<sub>4</sub> (Tiroxina), Calcitonina</td><td class="p-2.5">Regula el metabolismo basal y disminuye el calcio en sangre.</td></tr>
                             <tr><td class="p-2.5 font-bold text-cyan-400">Paratiroides</td><td class="p-2.5">Paratohormona (PTH)</td><td class="p-2.5">Aumenta los niveles de calcio en sangre (antagonista de calcitonina).</td></tr>
                             <tr><td class="p-2.5 font-bold text-cyan-400">Páncreas (Mixta)</td><td class="p-2.5">Insulina y Glucagón</td><td class="p-2.5">Insulina reduce glucosa sanguínea; Glucagón la eleva en ayuno.</td></tr>
                             <tr><td class="p-2.5 font-bold text-cyan-400">Suprarrenales</td><td class="p-2.5">Cortisol, Adrenalina, Aldosterona</td><td class="p-2.5">Respuesta al estrés, control metabólico e hídrico.</td></tr>
@@ -221,7 +234,7 @@
         </section>
 
         <!-- ================================================================= -->
-        <!-- TAB 2: QUÍMICA -->
+        <!-- TAB 2: QUÍMICA (FORMULACIÓN CORREGIDA CON SUBÍNDICES Y BADGES) -->
         <!-- ================================================================= -->
         <section id="sec-quimica" class="tab-content hidden space-y-8">
             <div class="bg-gradient-to-r from-cyan-900/40 via-slate-900 to-slate-900 p-6 rounded-2xl border border-cyan-500/30">
@@ -232,20 +245,20 @@
             <!-- Fórmulas y Compuestos -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 searchable-item">
                 <div class="bg-slate-900 p-5 rounded-xl border border-slate-800 space-y-3 text-xs">
-                    <h3 class="text-lg font-bold text-cyan-300 border-b border-slate-800 pb-2">Clasificación por Atomisidad</h3>
+                    <h3 class="text-lg font-bold text-cyan-300 border-b border-slate-800 pb-2">Clasificación por Atomicidad</h3>
                     <ul class="space-y-2 text-slate-300">
-                        <li><strong class="text-cyan-400">Monoatómicas:</strong> Elementos en estado fundamental ($He, Na$).</li>
-                        <li><strong class="text-cyan-400">Diatómicas:</strong> Formadas por 2 átomos ($O_2, H_2, HCl$).</li>
-                        <li><strong class="text-cyan-400">Triatómicas:</strong> 3 átomos ($O_3, H_2O, CO_2$).</li>
-                        <li><strong class="text-cyan-400">Tetraatómicas / Poliatómicas:</strong> ($P_4, NH_3, S_8$).</li>
+                        <li><strong class="text-cyan-400">Monoatómicas:</strong> Elementos en estado fundamental (<span class="chem-badge">He</span>, <span class="chem-badge">Na</span>, <span class="chem-badge">Ar</span>).</li>
+                        <li><strong class="text-cyan-400">Diatómicas:</strong> Formadas por 2 átomos (<span class="chem-badge">O<sub>2</sub></span>, <span class="chem-badge">H<sub>2</sub></span>, <span class="chem-badge">HCl</span>, <span class="chem-badge">N<sub>2</sub></span>).</li>
+                        <li><strong class="text-cyan-400">Triatómicas:</strong> 3 átomos (<span class="chem-badge">O<sub>3</sub></span>, <span class="chem-badge">H<sub>2</sub>O</span>, <span class="chem-badge">CO<sub>2</sub></span>).</li>
+                        <li><strong class="text-cyan-400">Tetraatómicas / Poliatómicas:</strong> (<span class="chem-badge">P<sub>4</sub></span>, <span class="chem-badge">NH<sub>3</sub></span>, <span class="chem-badge">S<sub>8</sub></span>, <span class="chem-badge">H<sub>2</sub>SO<sub>4</sub></span>).</li>
                     </ul>
                 </div>
 
                 <div class="bg-slate-900 p-5 rounded-xl border border-slate-800 space-y-3 text-xs">
                     <h3 class="text-lg font-bold text-cyan-300 border-b border-slate-800 pb-2">Tipos de Fórmulas Químicas</h3>
                     <ul class="space-y-2 text-slate-300">
-                        <li><strong class="text-cyan-400">Molecular:</strong> Muestra la cantidad real de átomos ($C_6H_{12}O_6, CH_4$).</li>
-                        <li><strong class="text-cyan-400">Empírica o Mínima:</strong> Proporción entera más simple ($CH_2O$ para la glucosa).</li>
+                        <li><strong class="text-cyan-400">Molecular:</strong> Muestra la cantidad real de átomos (<span class="chem-badge">C<sub>6</sub>H<sub>12</sub>O<sub>6</sub></span>, <span class="chem-badge">CH<sub>4</sub></span>).</li>
+                        <li><strong class="text-cyan-400">Empírica o Mínima:</strong> Proporción entera más simple (<span class="chem-badge">CH<sub>2</sub>O</span> para la glucosa).</li>
                         <li><strong class="text-cyan-400">Estructural:</strong> Ilustra cómo están unidos gráficamente los enlaces.</li>
                         <li><strong class="text-cyan-400">Fórmula de Lewis:</strong> Muestra los electrones de valencia como puntos o pares.</li>
                     </ul>
@@ -259,104 +272,104 @@
                     <table class="w-full text-left text-xs border-collapse">
                         <thead>
                             <tr class="bg-slate-800 text-cyan-300 border-b border-slate-700">
-                                <th class="p-2">Función Química</th>
-                                <th class="p-2">Estructura / Reacción</th>
-                                <th class="p-2 font-mono">Ejemplo</th>
-                                <th class="p-2">Sistemática (IUPAC)</th>
-                                <th class="p-2">Stock</th>
-                                <th class="p-2">Tradicional</th>
+                                <th class="p-2.5">Función Química</th>
+                                <th class="p-2.5">Estructura / Reacción</th>
+                                <th class="p-2.5">Ejemplo</th>
+                                <th class="p-2.5">Sistemática (IUPAC)</th>
+                                <th class="p-2.5">Stock</th>
+                                <th class="p-2.5">Tradicional</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-800 text-slate-300">
                             <!-- Óxidos Básicos -->
                             <tr>
-                                <td class="p-2 font-bold text-emerald-400">Óxido Básico</td>
-                                <td class="p-2">Metal + Oxígeno ($O^{-2}$)</td>
-                                <td class="p-2 font-mono text-cyan-300">Fe₂O₃</td>
-                                <td class="p-2">Trióxido de dihierro</td>
-                                <td class="p-2">Óxido de hierro (III)</td>
-                                <td class="p-2">Óxido férrico</td>
+                                <td class="p-2.5 font-bold text-emerald-400">Óxido Básico</td>
+                                <td class="p-2.5">Metal + Oxígeno (<span class="chem-badge">O<sup>-2</sup></span>)</td>
+                                <td class="p-2.5"><span class="chem-badge">Fe<sub>2</sub>O<sub>3</sub></span></td>
+                                <td class="p-2.5">Trióxido de dihierro</td>
+                                <td class="p-2.5">Óxido de hierro (III)</td>
+                                <td class="p-2.5">Óxido férrico</td>
                             </tr>
                             <!-- Óxidos Ácidos -->
                             <tr>
-                                <td class="p-2 font-bold text-emerald-400">Óxido Ácido (Anhídrido)</td>
-                                <td class="p-2">No Metal + Oxígeno ($O^{-2}$)</td>
-                                <td class="p-2 font-mono text-cyan-300">Cl₂O₇</td>
-                                <td class="p-2">Heptóxido de dicloro</td>
-                                <td class="p-2">Óxido de cloro (VII)</td>
-                                <td class="p-2">Anhídrido perclórico</td>
+                                <td class="p-2.5 font-bold text-emerald-400">Óxido Ácido (Anhídrido)</td>
+                                <td class="p-2.5">No Metal + Oxígeno (<span class="chem-badge">O<sup>-2</sup></span>)</td>
+                                <td class="p-2.5"><span class="chem-badge">Cl<sub>2</sub>O<sub>7</sub></span></td>
+                                <td class="p-2.5">Heptóxido de dicloro</td>
+                                <td class="p-2.5">Óxido de cloro (VII)</td>
+                                <td class="p-2.5">Anhídrido perclórico</td>
                             </tr>
                             <!-- Peróxidos -->
                             <tr>
-                                <td class="p-2 font-bold text-emerald-400">Peróxidos</td>
-                                <td class="p-2">Metal + Grupo Peroxo ($O_2^{-2}$)</td>
-                                <td class="p-2 font-mono text-cyan-300">H₂O₂ / Na₂O₂</td>
-                                <td class="p-2">Dióxido de dihidrógeno</td>
-                                <td class="p-2">Peróxido de hidrógeno</td>
-                                <td class="p-2">Agua oxigenada</td>
+                                <td class="p-2.5 font-bold text-emerald-400">Peróxidos</td>
+                                <td class="p-2.5">Metal + Grupo Peroxo (<span class="chem-badge">O<sub>2</sub><sup>-2</sup></span>)</td>
+                                <td class="p-2.5"><span class="chem-badge">H<sub>2</sub>O<sub>2</sub></span> / <span class="chem-badge">Na<sub>2</sub>O<sub>2</sub></span></td>
+                                <td class="p-2.5">Dióxido de dihidrógeno</td>
+                                <td class="p-2.5">Peróxido de hidrógeno</td>
+                                <td class="p-2.5">Agua oxigenada</td>
                             </tr>
                             <!-- Hidróxidos -->
                             <tr>
-                                <td class="p-2 font-bold text-emerald-400">Hidróxidos (Bases)</td>
-                                <td class="p-2">Óxido básico + $H_2O \rightarrow OH^-$</td>
-                                <td class="p-2 font-mono text-cyan-300">Fe(OH)₃</td>
-                                <td class="p-2">Trihidróxido de hierro</td>
-                                <td class="p-2">Hidróxido de hierro (III)</td>
-                                <td class="p-2">Hidróxido férrico</td>
+                                <td class="p-2.5 font-bold text-emerald-400">Hidróxidos (Bases)</td>
+                                <td class="p-2.5">Óxido básico + <span class="chem-badge">H<sub>2</sub>O</span> &rarr; <span class="chem-badge">OH<sup>-</sup></span></td>
+                                <td class="p-2.5"><span class="chem-badge">Fe(OH)<sub>3</sub></span></td>
+                                <td class="p-2.5">Trihidróxido de hierro</td>
+                                <td class="p-2.5">Hidróxido de hierro (III)</td>
+                                <td class="p-2.5">Hidróxido férrico</td>
                             </tr>
                             <!-- Ácidos Hidrácidos -->
                             <tr>
-                                <td class="p-2 font-bold text-emerald-400">Ácido Hidrácido</td>
-                                <td class="p-2">No Metal (VIA/VIIA) + $H^+$</td>
-                                <td class="p-2 font-mono text-cyan-300">HCl(ac) / H₂S(ac)</td>
-                                <td class="p-2">Cloruro de hidrógeno</td>
-                                <td class="p-2">Cloruro de hidrógeno</td>
-                                <td class="p-2">Ácido clorhídrico</td>
+                                <td class="p-2.5 font-bold text-emerald-400">Ácido Hidrácido</td>
+                                <td class="p-2.5">No Metal (VIA/VIIA) + <span class="chem-badge">H<sup>+</sup></span></td>
+                                <td class="p-2.5"><span class="chem-badge">HCl<sub>(ac)</sub></span> / <span class="chem-badge">H<sub>2</sub>S<sub>(ac)</sub></span></td>
+                                <td class="p-2.5">Cloruro de hidrógeno</td>
+                                <td class="p-2.5">Cloruro de hidrógeno</td>
+                                <td class="p-2.5">Ácido clorhídrico</td>
                             </tr>
                             <!-- Ácidos Oxácidos -->
                             <tr>
-                                <td class="p-2 font-bold text-emerald-400">Ácido Oxácido</td>
-                                <td class="p-2">Óxido ácido + $H_2O$</td>
-                                <td class="p-2 font-mono text-cyan-300">H₂SO₄</td>
-                                <td class="p-2">Tetraoxosulfato (VI) de H</td>
-                                <td class="p-2">Ácido tetraoxosulfúrico</td>
-                                <td class="p-2">Ácido sulfúrico</td>
+                                <td class="p-2.5 font-bold text-emerald-400">Ácido Oxácido</td>
+                                <td class="p-2.5">Óxido ácido + <span class="chem-badge">H<sub>2</sub>O</span></td>
+                                <td class="p-2.5"><span class="chem-badge">H<sub>2</sub>SO<sub>4</sub></span></td>
+                                <td class="p-2.5">Tetraoxosulfato (VI) de H</td>
+                                <td class="p-2.5">Ácido tetraoxosulfúrico</td>
+                                <td class="p-2.5">Ácido sulfúrico</td>
                             </tr>
                             <!-- Hidruros -->
                             <tr>
-                                <td class="p-2 font-bold text-emerald-400">Hidruro Metálico</td>
-                                <td class="p-2">Metal + Hidrógeno ($H^{-1}$)</td>
-                                <td class="p-2 font-mono text-cyan-300">BaH₂</td>
-                                <td class="p-2">Dihidruro de bario</td>
-                                <td class="p-2">Hidruro de bario</td>
-                                <td class="p-2">Hidruro bárico</td>
+                                <td class="p-2.5 font-bold text-emerald-400">Hidruro Metálico</td>
+                                <td class="p-2.5">Metal + Hidrógeno (<span class="chem-badge">H<sup>-1</sup></span>)</td>
+                                <td class="p-2.5"><span class="chem-badge">BaH<sub>2</sub></span></td>
+                                <td class="p-2.5">Dihidruro de bario</td>
+                                <td class="p-2.5">Hidruro de bario</td>
+                                <td class="p-2.5">Hidruro bárico</td>
                             </tr>
                             <!-- Sales Haloideas -->
                             <tr>
-                                <td class="p-2 font-bold text-emerald-400">Sal Haloidea</td>
-                                <td class="p-2">Hidróxido + Hidrácido</td>
-                                <td class="p-2 font-mono text-cyan-300">NaCl</td>
-                                <td class="p-2">Monocloruro de sodio</td>
-                                <td class="p-2">Cloruro de sodio</td>
-                                <td class="p-2">Cloruro sódico</td>
+                                <td class="p-2.5 font-bold text-emerald-400">Sal Haloidea</td>
+                                <td class="p-2.5">Hidróxido + Hidrácido</td>
+                                <td class="p-2.5"><span class="chem-badge">NaCl</span></td>
+                                <td class="p-2.5">Monocloruro de sodio</td>
+                                <td class="p-2.5">Cloruro de sodio</td>
+                                <td class="p-2.5">Cloruro sódico</td>
                             </tr>
                             <!-- Sales Oxisales -->
                             <tr>
-                                <td class="p-2 font-bold text-emerald-400">Sal Oxisal</td>
-                                <td class="p-2">Hidróxido + Oxácido</td>
-                                <td class="p-2 font-mono text-cyan-300">Ca(ClO₃)₂</td>
-                                <td class="p-2">Bis[trioxoclorato] de Ca</td>
-                                <td class="p-2">Clorato de calcio</td>
-                                <td class="p-2">Clorato cálcico</td>
+                                <td class="p-2.5 font-bold text-emerald-400">Sal Oxisal</td>
+                                <td class="p-2.5">Hidróxido + Oxácido</td>
+                                <td class="p-2.5"><span class="chem-badge">Ca(ClO<sub>3</sub>)<sub>2</sub></span></td>
+                                <td class="p-2.5">Bis[trioxoclorato] de Ca</td>
+                                <td class="p-2.5">Clorato de calcio</td>
+                                <td class="p-2.5">Clorato cálcico</td>
                             </tr>
                             <!-- Sales Ácidas y Básicas -->
                             <tr>
-                                <td class="p-2 font-bold text-emerald-400">Sal Ácida / Básica</td>
-                                <td class="p-2">Sustitución parcial de $H^+$ u $OH^-$</td>
-                                <td class="p-2 font-mono text-cyan-300">NaHCO₃ / CuOHNO₃</td>
-                                <td class="p-2">Hidrogenocarbonato de Na</td>
-                                <td class="p-2">Hidrogenocarbonato de Na</td>
-                                <td class="p-2">Bicarbonato de sodio</td>
+                                <td class="p-2.5 font-bold text-emerald-400">Sal Ácida / Básica</td>
+                                <td class="p-2.5">Sustitución parcial de <span class="chem-badge">H<sup>+</sup></span> u <span class="chem-badge">OH<sup>-</sup></span></td>
+                                <td class="p-2.5"><span class="chem-badge">NaHCO<sub>3</sub></span> / <span class="chem-badge">CuOHNO<sub>3</sub></span></td>
+                                <td class="p-2.5">Hidrogenocarbonato de Na</td>
+                                <td class="p-2.5">Hidrogenocarbonato de Na</td>
+                                <td class="p-2.5">Bicarbonato de sodio</td>
                             </tr>
                         </tbody>
                     </table>
@@ -383,7 +396,7 @@
                     </div>
 
                     <div id="moleculeInfoBox" class="bg-slate-800/60 p-4 rounded-lg space-y-2 text-xs text-slate-300">
-                        <p class="font-bold text-purple-400 text-sm" id="molTitle">Agua ($H_2O$)</p>
+                        <p class="font-bold text-purple-400 text-sm" id="molTitle">Agua (H<sub>2</sub>O)</p>
                         <p><strong class="text-slate-200">Tipo de Enlace:</strong> <span id="molBondType">Covalente Polar</span></p>
                         <p><strong class="text-slate-200">Electrones de Valencia:</strong> <span id="molValence">8 e⁻ totales</span></p>
                         <p id="molDesc" class="text-slate-400">El oxígeno comparte electrones con 2 hidrógenos, completando su octeto (8e⁻) mientras el hidrógeno completa su dueto (2e⁻).</p>
@@ -394,7 +407,7 @@
                 <div class="lg:col-span-2 bg-slate-900 p-5 rounded-xl border border-slate-800 flex flex-col items-center justify-center min-h-[350px]">
                     <h3 class="text-sm font-semibold text-slate-400 mb-2">Diagrama Electrónico de Lewis</h3>
                     <canvas id="lewisCanvas" width="500" height="300" class="bg-slate-950 rounded-xl border border-slate-800 max-w-full"></canvas>
-                    <div class="flex items-center gap-6 mt-4 text-xs">
+                    <div class="flex items-center gap-6 mt-4 text-xs flex-wrap justify-center">
                         <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-cyan-400 inline-block"></span> Electrones Compartidos (Enlaces)</div>
                         <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-purple-400 inline-block"></span> Pares Solitarios</div>
                         <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-emerald-400 inline-block"></span> Transferencia Iónica</div>
@@ -407,12 +420,12 @@
                 <div class="bg-slate-900 p-5 rounded-xl border border-slate-800 space-y-2">
                     <h4 class="font-bold text-purple-300 text-sm">Regla del Octeto</h4>
                     <p class="text-slate-300">Los átomos tienden a ganar, perder o compartir electrones hasta alcanzar 8 electrones en su capa de valencia (configuración estable de gas noble).</p>
-                    <p class="text-slate-400"><em>Excepción:</em> El Hidrógeno ($H$) se estabiliza con 2 electrones (regla del dueto).</p>
+                    <p class="text-slate-400"><em>Excepción:</em> El Hidrógeno (<span class="chem-badge">H</span>) se estabiliza con 2 electrones (regla del dueto).</p>
                 </div>
                 <div class="bg-slate-900 p-5 rounded-xl border border-slate-800 space-y-2">
                     <h4 class="font-bold text-purple-300 text-sm">Enlace Iónico vs Covalente</h4>
-                    <p><strong class="text-purple-400">Iónico:</strong> Ocurre por transferencia de electrones entre un metal y un no metal ($\Delta EN > 1.7$). Ej: $NaCl$.</p>
-                    <p><strong class="text-purple-400">Covalente:</strong> Compartición de electrones entre no metales. Puede ser simple ($H_2O$), doble ($CO_2, O_2$) o triple ($N_2$).</p>
+                    <p><strong class="text-purple-400">Iónico:</strong> Ocurre por transferencia de electrones entre un metal y un no metal (&Delta;EN &gt; 1.7). Ej: <span class="chem-badge">NaCl</span>.</p>
+                    <p><strong class="text-purple-400">Covalente:</strong> Compartición de electrones entre no metales. Puede ser simple (<span class="chem-badge">H<sub>2</sub>O</span>), doble (<span class="chem-badge">CO<sub>2</sub></span>, <span class="chem-badge">O<sub>2</sub></span>) o triple (<span class="chem-badge">N<sub>2</sub></span>).</p>
                 </div>
             </div>
         </section>
@@ -432,11 +445,11 @@
                 <div class="bg-slate-900 p-5 rounded-xl border border-slate-800 space-y-3">
                     <div class="flex justify-between items-center border-b border-slate-800 pb-2">
                         <h3 class="text-lg font-bold text-amber-400">MRU (Movimiento Rectilíneo Uniforme)</h3>
-                        <span class="text-xs px-2 py-0.5 bg-amber-500/20 text-amber-300 rounded">Aceleración $a = 0$</span>
+                        <span class="text-xs px-2 py-0.5 bg-amber-500/20 text-amber-300 rounded">Aceleración a = 0</span>
                     </div>
                     <p class="text-xs text-slate-300">La velocidad se mantiene constante en todo momento. La distancia recorrida es directamente proporcional al tiempo.</p>
                     <div class="bg-slate-800/60 p-3 rounded-lg text-xs space-y-2 text-amber-200 font-mono">
-                        <p><strong>Distancia:</strong> d = v · t</p>
+                        <p><strong>Distancia:</strong> d = v &middot; t</p>
                         <p><strong>Velocidad:</strong> v = d / t</p>
                         <p><strong>Tiempo:</strong> t = d / v</p>
                     </div>
@@ -446,14 +459,14 @@
                 <div class="bg-slate-900 p-5 rounded-xl border border-slate-800 space-y-3">
                     <div class="flex justify-between items-center border-b border-slate-800 pb-2">
                         <h3 class="text-lg font-bold text-amber-400">MRUV (Variado)</h3>
-                        <span class="text-xs px-2 py-0.5 bg-amber-500/20 text-amber-300 rounded">Aceleración $a = \text{constante}$</span>
+                        <span class="text-xs px-2 py-0.5 bg-amber-500/20 text-amber-300 rounded">Aceleración a = constante</span>
                     </div>
                     <p class="text-xs text-slate-300">La velocidad cambia uniformemente con el tiempo debido a una aceleración constante.</p>
                     <div class="bg-slate-800/60 p-3 rounded-lg text-xs space-y-1.5 text-amber-200 font-mono">
-                        <p>1) v_f = v_i + a · t</p>
-                        <p>2) d = v_i · t + ½ · a · t²</p>
-                        <p>3) v_f² = v_i² + 2 · a · d</p>
-                        <p>4) d = ((v_i + v_f) / 2) · t</p>
+                        <p>1) v<sub>f</sub> = v<sub>i</sub> + a &middot; t</p>
+                        <p>2) d = v<sub>i</sub> &middot; t + &frac12; &middot; a &middot; t&sup2;</p>
+                        <p>3) v<sub>f</sub>&sup2; = v<sub>i</sub>&sup2; + 2 &middot; a &middot; d</p>
+                        <p>4) d = ((v<sub>i</sub> + v<sub>f</sub>) / 2) &middot; t</p>
                     </div>
                 </div>
             </div>
@@ -468,15 +481,15 @@
                     
                     <div class="space-y-3 text-xs">
                         <div>
-                            <label class="block text-slate-300 mb-1">Distancia $d$ (m):</label>
+                            <label class="block text-slate-300 mb-1">Distancia <em>d</em> (m):</label>
                             <input type="number" id="mru_d" placeholder="Ej: 100" class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-amber-300 focus:outline-none">
                         </div>
                         <div>
-                            <label class="block text-slate-300 mb-1">Velocidad $v$ (m/s):</label>
+                            <label class="block text-slate-300 mb-1">Velocidad <em>v</em> (m/s):</label>
                             <input type="number" id="mru_v" placeholder="Ej: 20" class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-amber-300 focus:outline-none">
                         </div>
                         <div>
-                            <label class="block text-slate-300 mb-1">Tiempo $t$ (s):</label>
+                            <label class="block text-slate-300 mb-1">Tiempo <em>t</em> (s):</label>
                             <input type="number" id="mru_t" placeholder="Ej: 5" class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-amber-300 focus:outline-none">
                         </div>
                         
@@ -500,23 +513,23 @@
                     
                     <div class="grid grid-cols-2 gap-2 text-xs">
                         <div>
-                            <label class="block text-slate-300 mb-1">Velocidad Inicial $v_i$ (m/s):</label>
+                            <label class="block text-slate-300 mb-1">Velocidad Inicial <em>v<sub>i</sub></em> (m/s):</label>
                             <input type="number" id="mruv_vi" placeholder="v_i" class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-amber-300">
                         </div>
                         <div>
-                            <label class="block text-slate-300 mb-1">Velocidad Final $v_f$ (m/s):</label>
+                            <label class="block text-slate-300 mb-1">Velocidad Final <em>v<sub>f</sub></em> (m/s):</label>
                             <input type="number" id="mruv_vf" placeholder="v_f" class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-amber-300">
                         </div>
                         <div>
-                            <label class="block text-slate-300 mb-1">Aceleración $a$ (m/s²):</label>
+                            <label class="block text-slate-300 mb-1">Aceleración <em>a</em> (m/s²):</label>
                             <input type="number" id="mruv_a" placeholder="a" class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-amber-300">
                         </div>
                         <div>
-                            <label class="block text-slate-300 mb-1">Tiempo $t$ (s):</label>
+                            <label class="block text-slate-300 mb-1">Tiempo <em>t</em> (s):</label>
                             <input type="number" id="mruv_t" placeholder="t" class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-amber-300">
                         </div>
                         <div class="col-span-2">
-                            <label class="block text-slate-300 mb-1">Distancia $d$ (m):</label>
+                            <label class="block text-slate-300 mb-1">Distancia <em>d</em> (m):</label>
                             <input type="number" id="mruv_d" placeholder="d" class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-amber-300">
                         </div>
                     </div>
@@ -559,28 +572,28 @@
         </section>
 
         <!-- ================================================================= -->
-        <!-- TAB 6: SIMULADOR DE EXAMEN -->
+        <!-- TAB 6: SIMULADOR DE EXAMEN (20 PREGUNTAS COMPLETO) -->
         <!-- ================================================================= -->
         <section id="sec-examen" class="tab-content hidden space-y-6">
             <div class="bg-gradient-to-r from-red-900/40 via-slate-900 to-slate-900 p-6 rounded-2xl border border-red-500/30 flex justify-between items-center flex-wrap gap-4">
                 <div>
-                    <h2 class="text-2xl font-bold text-red-400 mb-1"><i class="fa-solid fa-clipboard-question mr-2"></i>Simulador de Examen Acumulativo</h2>
-                    <p class="text-slate-300 text-sm">Ponte a prueba con preguntas seleccionadas de las 3 materias con explicación al instante.</p>
+                    <h2 class="text-2xl font-bold text-red-400 mb-1"><i class="fa-solid fa-clipboard-question mr-2"></i>Simulador de Examen Completo (20 Preguntas)</h2>
+                    <p class="text-slate-300 text-sm">Examen de evaluación integradora: 7 de Biología, 7 de Química y 6 de Física Fundamental.</p>
                 </div>
-                <button onclick="resetExam()" class="px-4 py-2 bg-red-500 hover:bg-red-600 font-bold text-slate-950 rounded-lg text-xs transition">
+                <button onclick="resetExam()" class="px-4 py-2 bg-red-500 hover:bg-red-600 font-bold text-slate-950 rounded-lg text-xs transition shadow-lg">
                     <i class="fa-solid fa-rotate-right mr-1"></i> Reiniciar Examen
                 </button>
             </div>
 
             <!-- Score Banner -->
-            <div id="quizScoreBanner" class="hidden bg-slate-900 p-4 rounded-xl border border-slate-800 flex justify-between items-center text-sm">
+            <div id="quizScoreBanner" class="bg-slate-900 p-4 rounded-xl border border-slate-800 flex justify-between items-center text-xs sm:text-sm flex-wrap gap-2">
                 <div>
                     <span class="text-slate-400">Progreso:</span>
-                    <span id="quizProgress" class="font-bold text-cyan-400 ml-2">0/10 contestadas</span>
+                    <span id="quizProgress" class="font-bold text-cyan-400 ml-2">0/20 contestadas</span>
                 </div>
                 <div>
-                    <span class="text-slate-400">Puntuación:</span>
-                    <span id="quizScore" class="font-bold text-emerald-400 ml-2">0 pts</span>
+                    <span class="text-slate-400">Puntuación Total:</span>
+                    <span id="quizScore" class="font-bold text-emerald-400 ml-2">0 / 100 pts</span>
                 </div>
             </div>
 
@@ -594,7 +607,7 @@
 
     <!-- FOOTER -->
     <footer class="bg-slate-900 border-t border-slate-800 py-4 text-center text-xs text-slate-500 mt-auto">
-        <p>Portal de Repaso Académico Completo • Biología, Química y Física Fundamental</p>
+        <p>Portal de Repaso Académico Completo &bull; Biología, Química y Física Fundamental</p>
     </footer>
 
     <!-- SCRIPT SECTION -->
@@ -657,15 +670,11 @@
                 desc: "El átomo de Oxígeno central comparte 2 pares de e⁻ con dos átomos de Hidrógeno y conserva 2 pares solitarios.",
                 draw: (ctx, w, h) => {
                     const cx = w/2, cy = h/2;
-                    // Oxygen Center
                     drawAtom(ctx, cx, cy, "O", "#22d3ee");
-                    // Hydrogen Left & Right
                     drawAtom(ctx, cx - 90, cy + 30, "H", "#e2e8f0");
                     drawAtom(ctx, cx + 90, cy + 30, "H", "#e2e8f0");
-                    // Shared Bonds (Lines + Dots)
                     drawBond(ctx, cx, cy, cx - 90, cy + 30);
                     drawBond(ctx, cx, cy, cx + 90, cy + 30);
-                    // Lone Pairs on O
                     drawElectronPair(ctx, cx - 15, cy - 35, "#c084fc");
                     drawElectronPair(ctx, cx + 15, cy - 35, "#c084fc");
                 }
@@ -680,10 +689,8 @@
                     drawAtom(ctx, cx, cy, "C", "#38bdf8");
                     drawAtom(ctx, cx - 120, cy, "O", "#22d3ee");
                     drawAtom(ctx, cx + 120, cy, "O", "#22d3ee");
-                    // Double Bonds
                     drawDoubleBond(ctx, cx - 40, cy, cx - 80, cy);
                     drawDoubleBond(ctx, cx + 40, cy, cx + 80, cy);
-                    // Lone pairs on O
                     drawElectronPair(ctx, cx - 130, cy - 30, "#c084fc");
                     drawElectronPair(ctx, cx - 130, cy + 30, "#c084fc");
                     drawElectronPair(ctx, cx + 130, cy - 30, "#c084fc");
@@ -702,7 +709,6 @@
                     drawAtom(ctx, cx, cy + 80, "H", "#e2e8f0");
                     drawAtom(ctx, cx - 90, cy, "H", "#e2e8f0");
                     drawAtom(ctx, cx + 90, cy, "H", "#e2e8f0");
-
                     drawBond(ctx, cx, cy - 25, cx, cy - 60);
                     drawBond(ctx, cx, cy + 25, cx, cy + 60);
                     drawBond(ctx, cx - 25, cy, cx - 70, cy);
@@ -720,11 +726,9 @@
                     drawAtom(ctx, cx - 80, cy + 60, "H", "#e2e8f0");
                     drawAtom(ctx, cx + 80, cy + 60, "H", "#e2e8f0");
                     drawAtom(ctx, cx, cy + 90, "H", "#e2e8f0");
-
                     drawBond(ctx, cx, cy, cx - 80, cy + 60);
                     drawBond(ctx, cx, cy, cx + 80, cy + 60);
                     drawBond(ctx, cx, cy, cx, cy + 90);
-                    // Lone pair top
                     drawElectronPair(ctx, cx, cy - 35, "#c084fc");
                 }
             },
@@ -738,7 +742,6 @@
                     drawAtom(ctx, cx - 100, cy, "Na⁺", "#34d399");
                     drawAtom(ctx, cx + 100, cy, "Cl⁻", "#fbbf24");
                     
-                    // Arrow showing transfer
                     ctx.beginPath();
                     ctx.strokeStyle = "#34d399";
                     ctx.lineWidth = 3;
@@ -748,7 +751,6 @@
                     ctx.stroke();
                     ctx.setLineDash([]);
 
-                    // Octet on Cl
                     drawElectronPair(ctx, cx + 100, cy - 35, "#c084fc");
                     drawElectronPair(ctx, cx + 100, cy + 35, "#c084fc");
                     drawElectronPair(ctx, cx + 65, cy, "#c084fc");
@@ -779,7 +781,7 @@
 
         function updateLewisInfo() {
             const data = moleculesData[currentMolKey];
-            document.getElementById('molTitle').textContent = data.title;
+            document.getElementById('molTitle').innerHTML = data.title.replace('H₂O', 'H<sub>2</sub>O').replace('CO₂', 'CO<sub>2</sub>').replace('CH₄', 'CH<sub>4</sub>').replace('NH₃', 'NH<sub>3</sub>');
             document.getElementById('molBondType').textContent = data.bondType;
             document.getElementById('molValence').textContent = data.valence;
             document.getElementById('molDesc').textContent = data.desc;
@@ -796,7 +798,6 @@
             }
         }
 
-        // Helper Canvas Drawing Functions
         function drawAtom(ctx, x, y, symbol, color) {
             ctx.beginPath();
             ctx.arc(x, y, 22, 0, Math.PI * 2);
@@ -903,7 +904,6 @@
 
             resDiv.classList.remove('hidden');
 
-            // Caso 1: Conocidos vi, a, t -> calcular vf, d
             if (!isNaN(vi) && !isNaN(a) && !isNaN(t)) {
                 vf = vi + a * t;
                 d = vi * t + 0.5 * a * t * t;
@@ -914,7 +914,6 @@
                 return;
             }
 
-            // Caso 2: Conocidos vi, vf, t -> calcular a, d
             if (!isNaN(vi) && !isNaN(vf) && !isNaN(t)) {
                 if (t === 0) return;
                 a = (vf - vi) / t;
@@ -949,7 +948,7 @@
             { cat: 'quimica', q: '¿Cómo se nombra un compuesto con grupo funcional -OH?', a: 'Es un Hidróxido o Base. En tradicional finaliza en -ico/-oso, en Stock con romanos.' },
             { cat: 'quimica', q: '¿Cuál es la fórmula empírica de la Glucosa (C₆H₁₂O₆)?', a: 'CH₂O (se simplifica al mínimo entero divisor 6).' },
             { cat: 'quimica', q: '¿Qué caracteriza a una Sal Haloidea?', a: 'Resulta de neutralizar un Hidróxido con un Ácido Hidrácido (sin oxígeno). Ej: NaCl.' },
-            { cat: 'fisica', q: '¿Cuál es la aceleración en un Movimiento Rectilíneo Uniforme (MRU)?', a: 'Es cero (a = 0), ya que la velocidad permane constante.' },
+            { cat: 'fisica', q: '¿Cuál es la aceleración en un Movimiento Rectilíneo Uniforme (MRU)?', a: 'Es cero (a = 0), ya que la velocidad permanece constante.' },
             { cat: 'fisica', q: 'Fórmula para la velocidad final en MRUV:', a: 'v_f = v_i + a · t' }
         ];
 
@@ -964,13 +963,11 @@
                 cardEl.className = 'perspective-1000 h-48 cursor-pointer searchable-item';
                 cardEl.innerHTML = `
                     <div id="card-inner-${index}" onclick="flipCard(${index})" class="relative w-full h-full transform-style-3d transition-transform duration-500 rounded-xl bg-slate-900 border border-slate-800 p-5 flex items-center justify-center text-center shadow-lg hover:border-cyan-500/40">
-                        <!-- Front -->
                         <div class="absolute inset-0 backface-hidden p-5 flex flex-col justify-between items-center">
                             <span class="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded ${getCatBadge(card.cat)}">${card.cat}</span>
                             <p class="font-semibold text-slate-100 text-xs sm:text-sm my-auto">${card.q}</p>
                             <span class="text-[10px] text-slate-500"><i class="fa-solid fa-rotate mr-1"></i>Haz clic para voltear</span>
                         </div>
-                        <!-- Back -->
                         <div class="absolute inset-0 backface-hidden rotate-y-180 p-5 flex flex-col justify-between items-center bg-slate-850 rounded-xl border border-cyan-500/50">
                             <span class="text-[10px] text-cyan-400 font-bold uppercase">Respuesta</span>
                             <p class="text-xs text-slate-200 my-auto">${card.a}</p>
@@ -998,38 +995,178 @@
         }
 
         // =================================================================
-        // EXAM SIMULATION & QUIZ DATA
+        // EXAM SIMULATION - EXACTLY 20 BALANCED QUESTIONS
         // =================================================================
         const quizQuestions = [
+            // BIOLOGÍA (7 Preguntas)
             {
-                q: "1. ¿Qué estructura celular neuronal es responsable de acelerar la transmisión del impulso mediante la conducción saltatoria?",
-                options: ["Vaina de Mielina", "Dendrita", "Cuerpos de Nissl", "Soma"],
+                subject: "Biología",
+                q: "1. ¿Qué estructura neuronal aísla el axón y permite la conducción saltatoria del impulso nervioso acelerando su propagación?",
+                options: ["Dendritas", "Vaina de Mielina", "Soma celular", "Botones sinápticos"],
+                correct: 1,
+                explain: "La vaina de mielina es una capa lipídica aislante que incrementa significativamente la velocidad de transmisión del potencial de acción."
+            },
+            {
+                subject: "Biología",
+                q: "2. Durante el potencial de reposo celular en una neurona (-70 mV), ¿cuál es la acción de la Bomba Sodio-Potasio?",
+                options: [
+                    "Expulsa 2 Na⁺ e ingresa 3 K⁺",
+                    "Expulsa 3 Na⁺ e ingresa 2 K⁺",
+                    "Ingresa 3 Na⁺ y expulsa 3 K⁺",
+                    "Pasa libremente Na⁺ por difusión simple"
+                ],
+                correct: 1,
+                explain: "La bomba de membrana expulsa 3 iones de Sodio (Na⁺) e ingresa 2 iones de Potasio (K⁺) mediante transporte activo (gasto de ATP)."
+            },
+            {
+                subject: "Biología",
+                q: "3. ¿En qué región anatómica de la médula espinal se ubican los cuerpos neuronales e interneuronas?",
+                options: ["Sustancia Blanca", "Sustancia Gris", "Cordones posteriores", "Duramadre"],
+                correct: 1,
+                explain: "La sustancia gris central (con forma de H o mariposa) alberga los somas neuronales, mientras la sustancia blanca contiene axones mielinizados."
+            },
+            {
+                subject: "Biología",
+                q: "4. ¿Cuál es la secuencia correcta del recorrido del impulso en un Arco Reflejo simple?",
+                options: [
+                    "Efector → Neurona motora → Centro integrador → Neurona sensitiva → Receptor",
+                    "Receptor → Neurona sensitiva → Centro integrador → Neurona motora → Efector",
+                    "Neurona motora → Receptor → Interneurona → Efector",
+                    "Centro integrador → Receptor → Neurona sensitiva → Músculo"
+                ],
+                correct: 1,
+                explain: "El estímulo viaja desde el receptor por la neurona aferente (sensitiva), procesa en la médula y envía la respuesta por la eferente (motora) hacia el efector."
+            },
+            {
+                subject: "Biología",
+                q: "5. ¿Qué hormona pancreática es segregada en respuesta a niveles elevados de glucosa en sangre (hiperglucemia)?",
+                options: ["Glucagón", "Insulina", "Cortisol", "Adrenalina"],
+                correct: 1,
+                explain: "Las células beta del páncreas secretan insulina para facilitar el ingreso de glucosa a las células y disminuir su concentración plasmática."
+            },
+            {
+                subject: "Biología",
+                q: "6. La hormona Paratohormona (PTH) producida por las glándulas paratiroides cumple la función de:",
+                options: [
+                    "Disminuir la concentración de Calcio en sangre",
+                    "Elevar los niveles de Calcio en sangre estimulando la reabsorción ósea",
+                    "Aumentar el metabolismo de carbohidratos exclusivamente",
+                    "Estimular la síntesis de tiroxina T₄"
+                ],
+                correct: 1,
+                explain: "La PTH incrementa la calcemia (antagonista de la calcitonina) liberando calcio de los huesos al torrente sanguíneo."
+            },
+            {
+                subject: "Biología",
+                q: "7. Si se cruzan dos plantas heterocigotas (Aa x Aa) para una característica mendeliana, ¿cuál es la proporción genotípica esperada?",
+                options: ["100% Aa", "50% AA y 50% aa", "1 AA : 2 Aa : 1 aa", "3 AA : 1 aa"],
+                correct: 2,
+                explain: "El Cuadro de Punnett para Aa x Aa produce 25% AA, 50% Aa y 25% aa (proporción genotípica 1:2:1)."
+            },
+
+            // QUÍMICA (7 Preguntas)
+            {
+                subject: "Química",
+                q: "8. ¿Cómo se clasifica el compuesto químico Trióxido de dihierro (Fe₂O₃) según las funciones inorgánicas?",
+                options: ["Óxido Ácido / Anhídrido", "Óxido Básico", "Hidróxido", "Peróxido"],
+                correct: 1,
+                explain: "El Fe₂O₃ combina un metal (Hierro) con el Oxígeno, por lo que constituye un Óxido Básico."
+            },
+            {
+                subject: "Química",
+                q: "9. La nomenclatura tradicional para el compuesto H₂SO₄ es:",
+                options: ["Ácido sulfuroso", "Ácido sulfúrico", "Tetraoxosulfato de hidrógeno", "Sulfuro de hidrógeno"],
+                correct: 1,
+                explain: "El Azufre actúa con su mayor estado de oxidación habitual (+6), otorgando la terminación -ico: Ácido sulfúrico."
+            },
+            {
+                subject: "Química",
+                q: "10. ¿Cuál es el nombre en Nomenclatura Stock para el hidróxido de fórmula Cu(OH)₂?",
+                options: ["Hidróxido cúprico", "Dihidróxido de cobre", "Hidróxido de cobre (II)", "Hidróxido de cobre (I)"],
+                correct: 2,
+                explain: "En Stock se coloca el nombre general 'Hidróxido de' seguido del metal y su valencia en romanos entre paréntesis: Cobre (II)."
+            },
+            {
+                subject: "Química",
+                q: "11. ¿Qué tipo de enlace químico se forma entre el Sodio (Na) y el Cloro (Cl) para formar Cloruro de Sodio (NaCl)?",
+                options: ["Covalente Polar", "Covalente Apolar", "Enlace Iónico", "Enlace Metálico"],
+                correct: 2,
+                explain: "Existe una gran diferencia de electronegatividad (&Delta;EN &gt; 1.7) donde el Sodio cede un electrón al Cloro resultando en un enlace Iónico."
+            },
+            {
+                subject: "Química",
+                q: "12. La molécula de Dióxido de Carbono (CO₂) posee enlaces de tipo:",
+                options: ["Simples covalentes polares", "Dobles covalentes", "Iónicos puros", "Triples covalentes"],
+                correct: 1,
+                explain: "En la estructura de Lewis del CO₂, el Carbono establece dos enlaces dobles covalentes compartidos con los átomos de Oxígeno (O=C=O)."
+            },
+            {
+                subject: "Química",
+                q: "13. ¿Cuál es la fórmula empírica (mínima) del compuesto cuya fórmula molecular es C₆H₁₂O₆ (Glucosa)?",
+                options: ["CHO", "CH₂O", "C₂H₄O₂", "C₆H₁₂O₆"],
+                correct: 1,
+                explain: "La fórmula empírica es la relación entera más pequeña entre los átomos. Dividiendo todos los subíndices entre 6 resulta CH₂O."
+            },
+            {
+                subject: "Química",
+                q: "14. El compuesto NaHCO₃ (Bicarbonato de sodio) se clasifica dentro de la función química como:",
+                options: ["Sal Haloidea Neutra", "Sal Oxisal Ácida", "Hidróxido", "Óxido ácido"],
+                correct: 1,
+                explain: "Es una sal oxisal que conserva un átomo de Hidrógeno sustituible del ácido carbónico original, clasificándose como Sal Ácida."
+            },
+
+            // FÍSICA FUNDAMENTAL (6 Preguntas)
+            {
+                subject: "Física",
+                q: "15. Un cuerpo viaja en línea recta a una velocidad constante de 25 m/s durante 12 segundos. ¿Qué distancia recorre?",
+                options: ["150 m", "200 m", "300 m", "450 m"],
+                correct: 2,
+                explain: "En MRU: d = v &middot; t = (25 m/s) &middot; (12 s) = 300 metros."
+            },
+            {
+                subject: "Física",
+                q: "16. ¿Cuál es la aceleración de un vehículo que parte del reposo (vᵢ = 0) y alcanza una velocidad de 20 m/s en 4 segundos?",
+                options: ["2 m/s²", "4 m/s²", "5 m/s²", "10 m/s²"],
+                correct: 2,
+                explain: "En MRUV: a = (v_f - v_i) / t = (20 - 0) / 4 = 5 m/s²."
+            },
+            {
+                subject: "Física",
+                q: "17. Despeje correcto de la aceleración 'a' a partir de la ecuación de MRUV: v_f² = v_i² + 2·a·d",
+                options: [
+                    "a = (v_f² - v_i²) / (2 · d)",
+                    "a = (v_f - v_i) / 2d",
+                    "a = v_f² + v_i² · 2d",
+                    "a = 2d / (v_f² - v_i²)"
+                ],
                 correct: 0,
-                explain: "La Vaina de Mielina actúa como aislante eléctrico permitiendo que el potencial salte entre los Nódulos de Ranvier."
+                explain: "Restando v_i² en ambos lados: v_f² - v_i² = 2ad. Luego dividiendo por 2d se obtiene a = (v_f² - v_i²) / (2d)."
             },
             {
-                q: "2. ¿Cuál es el nombre tradicional del compuesto Fe₂O₃?",
-                options: ["Óxido ferroso", "Óxido férrico", "Trióxido de hierro", "Hidróxido de hierro"],
+                subject: "Física",
+                q: "18. En el Sistema Internacional (SI), ¿cuál es la unidad oficial para medir la velocidad y la aceleración respectivamente?",
+                options: ["km/h y m/s", "m/s y m/s²", "m/s y km/h²", "cm/s y m/s²"],
                 correct: 1,
-                explain: "El hierro utiliza su mayor número de oxidación (+3), por lo que en nomenclatura tradicional lleva el sufijo -ico."
+                explain: "En el Sistema Internacional, la velocidad se expresa en metros por segundo (m/s) y la aceleración en metros por segundo al cuadrado (m/s²)."
             },
             {
-                q: "3. Un automóvil acelera de 10 m/s a 30 m/s en 5 segundos. ¿Cuál es su aceleración?",
-                options: ["2 m/s²", "4 m/s²", "6 m/s²", "8 m/s²"],
-                correct: 1,
-                explain: "a = (v_f - v_i)/t = (30 - 10)/5 = 20 / 5 = 4 m/s²."
+                subject: "Física",
+                q: "19. Si la aceleración de un objeto en movimiento es igual a 0 m/s², esto indica que:",
+                options: [
+                    "El objeto está detenido obligatoriamente",
+                    "El objeto experimenta un MRUV acelerado",
+                    "La velocidad permanece totalmente constante (MRU)",
+                    "El objeto está aumentando su rapidez rápidamente"
+                ],
+                correct: 2,
+                explain: "Cuando la aceleración es nula (a = 0), no hay cambio en el módulo ni dirección de la velocidad; el movimiento es rectilíneo uniforme."
             },
             {
-                q: "4. ¿Cuál de las siguientes hormonas es secretada por el Páncreas para elevar los niveles de glucosa en sangre?",
-                options: ["Insulina", "Glucagón", "Calcitonina", "Cortisol"],
+                subject: "Física",
+                q: "20. Un móvil desacelera a razón de -2 m/s² reduciendo su velocidad desde 30 m/s hasta detenerse por completo (v_f = 0). ¿Cuánto tiempo tarda en frenar?",
+                options: ["10 s", "15 s", "20 s", "60 s"],
                 correct: 1,
-                explain: "El Glucagón estimula la glucogenólisis hepática aumentando la glucemia en periodos de ayuno."
-            },
-            {
-                q: "5. En la nomenclatura Stock para el compuesto FeCl₃, se nombra como:",
-                options: ["Cloruro de hierro", "Cloruro de hierro (III)", "Tricloruro de hierro", "Cloruro férrico"],
-                correct: 1,
-                explain: "La nomenclatura Stock especifica el número de oxidación del elemento metálico en números romanos entre paréntesis."
+                explain: "t = (v_f - v_i) / a = (0 - 30) / (-2) = -30 / -2 = 15 segundos."
             }
         ];
 
@@ -1043,30 +1180,37 @@
                 const card = document.createElement('div');
                 card.className = 'bg-slate-900 p-5 rounded-xl border border-slate-800 space-y-3';
                 
+                let badgeClass = 'bg-amber-900/50 text-amber-300 border-amber-500/40';
+                if(qObj.subject === 'Biología') badgeClass = 'bg-emerald-900/50 text-emerald-300 border-emerald-500/40';
+                if(qObj.subject === 'Química') badgeClass = 'bg-cyan-900/50 text-cyan-300 border-cyan-500/40';
+
                 let optionsHTML = '';
                 qObj.options.forEach((opt, oIdx) => {
                     optionsHTML += `
                         <button onclick="selectAnswer(${qIdx}, ${oIdx})" id="btn-q${qIdx}-o${oIdx}" 
                                 class="w-full text-left p-3 rounded-lg bg-slate-800/70 hover:bg-slate-800 border border-slate-700/60 text-xs text-slate-200 transition">
-                            ${opt}
+                            <span class="font-bold text-slate-400 mr-2">${String.fromCharCode(65 + oIdx)})</span> ${opt}
                         </button>
                     `;
                 });
 
                 card.innerHTML = `
-                    <p class="font-bold text-slate-100 text-sm">${qObj.q}</p>
-                    <div class="space-y-2" id="options-q${qIdx}">${optionsHTML}</div>
+                    <div class="flex justify-between items-center flex-wrap gap-2">
+                        <span class="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded border ${badgeClass}">${qObj.subject}</span>
+                        <span class="text-xs text-slate-500 font-mono">Pregunta ${qIdx + 1} de 20</span>
+                    </div>
+                    <p class="font-bold text-slate-100 text-sm leading-relaxed">${qObj.q}</p>
+                    <div class="space-y-2 pt-1" id="options-q${qIdx}">${optionsHTML}</div>
                     <div id="explain-q${qIdx}" class="hidden p-3 bg-slate-800/90 rounded border text-xs"></div>
                 `;
 
                 container.appendChild(card);
             });
-            document.getElementById('quizScoreBanner').classList.remove('hidden');
             updateQuizScore();
         }
 
         function selectAnswer(qIdx, oIdx) {
-            if (userAnswers[qIdx] !== undefined) return; // Prevent re-select
+            if (userAnswers[qIdx] !== undefined) return;
 
             userAnswers[qIdx] = oIdx;
             const qObj = quizQuestions[qIdx];
@@ -1084,10 +1228,10 @@
             explainDiv.classList.remove('hidden');
             if (oIdx === qObj.correct) {
                 explainDiv.classList.add('border-emerald-500/40', 'text-emerald-300');
-                explainDiv.innerHTML = `<strong class="block mb-1">¡Correcto!</strong> ${qObj.explain}`;
+                explainDiv.innerHTML = `<strong class="block mb-1"><i class="fa-solid fa-circle-check mr-1"></i>¡Respuesta Correcta (+5 pts)!</strong> ${qObj.explain}`;
             } else {
                 explainDiv.classList.add('border-red-500/40', 'text-red-300');
-                explainDiv.innerHTML = `<strong class="block mb-1">Incorrecto.</strong> ${qObj.explain}`;
+                explainDiv.innerHTML = `<strong class="block mb-1"><i class="fa-solid fa-circle-xmark mr-1"></i>Respuesta Incorrecta.</strong> ${qObj.explain}`;
             }
 
             updateQuizScore();
@@ -1103,8 +1247,9 @@
                 }
             });
 
-            document.getElementById('quizProgress').textContent = `${answeredCount}/${quizQuestions.length} contestadas`;
-            document.getElementById('quizScore').textContent = `${correctCount * 20} / 100 pts (${correctCount} correctas)`;
+            const scorePoints = correctCount * 5; // 20 questions * 5 pts = 100 max
+            document.getElementById('quizProgress').textContent = `${answeredCount}/20 contestadas`;
+            document.getElementById('quizScore').textContent = `${scorePoints} / 100 pts (${correctCount} de 20 correctas)`;
         }
 
         function resetExam() {
