@@ -1,382 +1,1132 @@
+```html
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guía Maestra de Biología I - IV Unidad | Don Bosco</title>
+    <title>Portal de Estudio Interactivo - Biología, Química y Física</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        slate: {
+                            850: '#111827',
+                            900: '#0f172a',
+                            950: '#020617',
+                        },
+                        cyan: {
+                            400: '#22d3ee',
+                            500: '#06b6d4',
+                            900: '#164e63',
+                        },
+                        emerald: {
+                            400: '#34d399',
+                            500: '#10b981',
+                        },
+                        amber: {
+                            400: '#fbbf24',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Inter:wght@300;400;600;700;800&display=swap');
         body { font-family: 'Inter', sans-serif; }
-        .fun-font { font-family: 'Fredoka', cursive, sans-serif; }
-        
-        @keyframes marquee {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
+        .tab-btn.active {
+            border-bottom: 3px solid #22d3ee;
+            color: #22d3ee;
+            background-color: rgba(34, 211, 238, 0.08);
         }
-        .animate-marquee {
-            display: inline-block;
-            white-space: nowrap;
-            animation: marquee 28s linear infinite;
-        }
-
-        @keyframes popSurprise {
-            0% { transform: scale(0.3) translateY(100px) rotate(-10deg); opacity: 0; }
-            50% { transform: scale(1.1) translateY(-10px) rotate(3deg); opacity: 1; }
-            70% { transform: scale(0.95) translateY(0) rotate(-1deg); }
-            100% { transform: scale(1) translateY(0) rotate(0deg); opacity: 1; }
-        }
-
-        .pop-toast {
-            animation: popSurprise 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-        }
+        .perspective-1000 { perspective: 1000px; }
+        .transform-style-3d { transform-style: preserve-3d; }
+        .backface-hidden { backface-visibility: hidden; }
+        .rotate-y-180 { transform: rotateY(180deg); }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
     </style>
 </head>
-<body class="bg-slate-950 text-slate-100 antialiased min-h-screen relative overflow-x-hidden">
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col">
 
-    <!-- CONTENEDOR DE POP-UPS CÓMICOS -->
-    <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-3 max-w-xs md:max-w-sm pointer-events-none"></div>
-
-    <!-- MARQUESINA ANIMADA DE CLASE -->
-    <div class="bg-gradient-to-r from-emerald-600 via-teal-500 to-green-600 text-slate-950 font-black text-xs py-2 shadow-lg border-b-2 border-emerald-300">
-        <div class="animate-marquee flex items-center gap-8">
-            <span>🧬 BIOLOGÍA I - PROFE ISMAEL GARCÍA:</span>
-            <span>🔬 Recuerda: En la transcripción a ARNm la Timina (T) cambia por Uracilo (U)</span>
-            <span>🧬 Reglas de Chargaff: A=T, G=C y A+G=T+C (Relación 1:1)</span>
-            <span>🌱 Linneo creó la Nomenclatura Binomial y Whittaker añadió el Reino Fungi</span>
-            <span>🔄 Fases de la Mitosis: PRO-META-ANA-TELO + Interfase y Citocinesis</span>
-        </div>
-    </div>
-
-    <!-- HEADER / HERO -->
-    <header class="bg-gradient-to-r from-emerald-950 via-slate-900 to-teal-950 border-b-4 border-emerald-400 shadow-2xl relative overflow-hidden">
-        <div class="max-w-5xl mx-auto px-6 py-8 relative z-10">
-            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
-                <div>
-                    <span class="bg-emerald-400 text-slate-950 font-black text-xs px-3 py-1 rounded-full uppercase tracking-wider shadow-md">
-                        4to Bachillerato • Don Bosco • Biología I
-                    </span>
-                    <h1 class="text-3xl md:text-5xl font-extrabold text-white mt-3 fun-font tracking-wide">
-                        Temario de <span class="text-emerald-400">Biología I</span> 🧫
-                    </h1>
-                    <p class="text-emerald-200 mt-2 text-sm md:text-base font-medium">
-                        Guía de estudio completa: Mitosis, Código Genético y Taxonomía por Francisco (Cabrón) Gil.
-                    </p>
+    <!-- HEADER / NAVIGATION -->
+    <header class="bg-slate-900 border-b border-slate-800 sticky top-0 z-50 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Title & Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="p-2 bg-gradient-to-tr from-cyan-500 to-emerald-500 rounded-lg text-slate-950 font-black text-xl">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-extrabold text-lg sm:text-xl text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-emerald-400 to-amber-400">
+                            Portal de Estudio Total
+                        </h1>
+                        <p class="text-xs text-slate-400 hidden sm:block">Biología • Química • Física Fundamental</p>
+                    </div>
                 </div>
-                <div class="bg-emerald-900/80 p-4 rounded-2xl border-2 border-emerald-400 text-center min-w-[180px] shadow-2xl transform rotate-1">
-                    <i class="fa-solid fa-dna text-4xl text-amber-400 mb-1 animate-pulse"></i>
-                    <p class="text-xs text-emerald-200 font-bold uppercase">Profe: Ismael García</p>
-                    <p class="text-base font-black text-white">Cuarta Unidad 2026</p>
+
+                <!-- Global Search -->
+                <div class="relative w-48 sm:w-72">
+                    <input type="text" id="globalSearch" onkeyup="handleGlobalSearch()" placeholder="Buscar concepto o fórmula..." 
+                           class="w-full bg-slate-800 border border-slate-700 text-xs sm:text-sm rounded-lg pl-9 pr-3 py-1.5 text-slate-200 focus:outline-none focus:ring-2 focus:ring-cyan-400">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-xs"></i>
                 </div>
             </div>
+
+            <!-- TAB MENU BAR -->
+            <nav class="flex overflow-x-auto space-x-1 sm:space-x-4 border-t border-slate-800 text-xs sm:text-sm font-medium no-scrollbar">
+                <button onclick="switchTab('biologia')" id="tab-biologia" class="tab-btn active whitespace-nowrap py-3 px-4 text-slate-300 hover:text-cyan-400 transition flex items-center gap-2">
+                    <i class="fa-solid fa-dna text-emerald-400"></i> Biología
+                </button>
+                <button onclick="switchTab('quimica')" id="tab-quimica" class="tab-btn whitespace-nowrap py-3 px-4 text-slate-300 hover:text-cyan-400 transition flex items-center gap-2">
+                    <i class="fa-solid fa-flask text-cyan-400"></i> Química
+                </button>
+                <button onclick="switchTab('lewis')" id="tab-lewis" class="tab-btn whitespace-nowrap py-3 px-4 text-slate-300 hover:text-cyan-400 transition flex items-center gap-2">
+                    <i class="fa-solid fa-atom text-purple-400"></i> Estructuras Lewis
+                </button>
+                <button onclick="switchTab('fisica')" id="tab-fisica" class="tab-btn whitespace-nowrap py-3 px-4 text-slate-300 hover:text-cyan-400 transition flex items-center gap-2">
+                    <i class="fa-solid fa-person-running text-amber-400"></i> Física (MRU/MRUV)
+                </button>
+                <button onclick="switchTab('flashcards')" id="tab-flashcards" class="tab-btn whitespace-nowrap py-3 px-4 text-slate-300 hover:text-cyan-400 transition flex items-center gap-2">
+                    <i class="fa-solid fa-layer-group text-pink-400"></i> Flashcards
+                </button>
+                <button onclick="switchTab('examen')" id="tab-examen" class="tab-btn whitespace-nowrap py-3 px-4 text-slate-300 hover:text-cyan-400 transition flex items-center gap-2">
+                    <i class="fa-solid fa-clipboard-question text-red-400"></i> Simulador Examen
+                </button>
+            </nav>
         </div>
     </header>
 
-    <main class="max-w-5xl mx-auto px-6 py-8 space-y-10">
-
-        <!-- RESUMEN DE TEMAS DEL TEMARIO -->
-        <div class="bg-slate-900/90 border-2 border-emerald-500/50 p-5 rounded-3xl shadow-2xl space-y-3">
-            <h3 class="text-lg font-black text-emerald-300 fun-font flex items-center gap-2">
-                <i class="fa-solid fa-list-check"></i> Temas Clave del Examen
-            </h3>
-            <div class="grid md:grid-cols-3 gap-3 text-xs">
-                <div class="bg-slate-950 p-3.5 rounded-xl border border-slate-800">
-                    <span class="text-amber-400 font-bold block mb-1">1. Mitosis (6 Fases)</span>
-                    <p class="text-slate-300">Diferenciación e identificación visual de Interfase, Profase, Metafase, Anafase, Telofase y Citocinesis.</p>
-                </div>
-                <div class="bg-slate-950 p-3.5 rounded-xl border border-slate-800">
-                    <span class="text-amber-400 font-bold block mb-1">2. Código Genético</span>
-                    <p class="text-slate-300">Secuencias de ADN y ARNm, parejas de bases, reglas de Chargaff y traducción a aminoácidos con la tabla de codones.</p>
-                </div>
-                <div class="bg-slate-950 p-3.5 rounded-xl border border-slate-800">
-                    <span class="text-amber-400 font-bold block mb-1">3. Taxonomía</span>
-                    <p class="text-slate-300">Aportes e historia de la clasificación de seres vivos: Aristóteles, Linneo, Haeckel, Chatton, Copeland, Whittaker, Woese y Margulis.</p>
-                </div>
-            </div>
+    <!-- SEARCH RESULT BANNER (HIDDEN BY DEFAULT) -->
+    <div id="searchResultBanner" class="hidden bg-slate-900 border-b border-cyan-500/30 px-4 py-3 max-w-7xl mx-auto w-full">
+        <div class="flex justify-between items-center text-xs sm:text-sm">
+            <span class="text-cyan-300 font-semibold" id="searchCountText">Resultados de búsqueda:</span>
+            <button onclick="clearSearch()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i> Limpiar Búsqueda</button>
         </div>
+    </div>
 
-        <!-- TEMA 1: MITOSIS -->
-        <section class="bg-slate-900/90 rounded-3xl border-2 border-emerald-700/60 overflow-hidden shadow-2xl">
-            <div class="bg-gradient-to-r from-emerald-900 via-teal-900 to-slate-900 px-6 py-4 text-white flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <span class="bg-emerald-400 text-slate-950 font-black text-xs w-8 h-8 rounded-full flex items-center justify-center shadow-lg">1</span>
-                    <h2 class="text-lg md:text-xl font-bold fun-font">Tema 1: Mitosis y División Celular (Las 6 Fases)</h2>
-                </div>
-                <i class="fa-solid fa-circle-nodes text-emerald-400 text-2xl"></i>
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+        <!-- ================================================================= -->
+        <!-- TAB 1: BIOLOGÍA -->
+        <!-- ================================================================= -->
+        <section id="sec-biologia" class="tab-content space-y-8">
+            <div class="bg-gradient-to-r from-emerald-900/40 via-slate-900 to-slate-900 p-6 rounded-2xl border border-emerald-500/30">
+                <h2 class="text-2xl font-bold text-emerald-400 mb-2"><i class="fa-solid fa-dna mr-2"></i>Biología General y Anatomía</h2>
+                <p class="text-slate-300 text-sm">Resumen exhaustivo del Sistema Nervioso, Transmisión del Impulso, Arco Reflejo, Sistema Endocrino y Fundamentos de Genética.</p>
             </div>
 
-            <div class="p-6 space-y-4 text-xs">
-                <p class="text-emerald-200">La mitosis es el proceso mediante el cual las células eucariotas se dividen para producir dos células hijas genéticamente idénticas a la célula madre. La división celular en células animales suele durar entre 30 minutos y 2 horas.</p>
+            <!-- Sistema Nervioso y Neuronas -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 searchable-item">
+                <div class="bg-slate-900 p-5 rounded-xl border border-slate-800 space-y-4">
+                    <h3 class="text-lg font-bold text-emerald-300 border-b border-slate-800 pb-2"><i class="fa-solid fa-brain mr-2"></i>Estructura de la Neurona</h3>
+                    <p class="text-xs text-slate-300">Unidad anatómica y funcional del sistema nervioso especializada en conducir impulsos electroquímicos.</p>
+                    <ul class="text-xs space-y-2 text-slate-300">
+                        <li class="p-2 bg-slate-800/60 rounded"><strong class="text-emerald-400">Soma o Cuerpo:</strong> Contiene el núcleo y los organelos. Procesa la información.</li>
+                        <li class="p-2 bg-slate-800/60 rounded"><strong class="text-emerald-400">Núcleo:</strong> Dirige la actividad metabólica celular.</li>
+                        <li class="p-2 bg-slate-800/60 rounded"><strong class="text-emerald-400">Dendritas:</strong> Ramificaciones cortas que reciben estímulos de otras células.</li>
+                        <li class="p-2 bg-slate-800/60 rounded"><strong class="text-emerald-400">Axón:</strong> Prolongación larga que transmite el impulso nervioso lejos del cuerpo.</li>
+                        <li class="p-2 bg-slate-800/60 rounded"><strong class="text-emerald-400">Vaina de Mielina:</strong> Capa lipídica que aísla el axón y acelera la conducción eléctrica.</li>
+                        <li class="p-2 bg-slate-800/60 rounded"><strong class="text-emerald-400">Cuerpos de Nissl:</strong> Cúmulos de retículo endoplásmico rugoso para síntesis de proteínas.</li>
+                        <li class="p-2 bg-slate-800/60 rounded"><strong class="text-emerald-400">Botones Terminales:</strong> Extremos del axón que liberan neurotransmisores a la hendidura sináptica.</li>
+                    </ul>
+                </div>
 
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <!-- 1. Interfase -->
-                    <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-1.5">
-                        <span class="bg-emerald-900/80 text-emerald-300 font-extrabold px-2 py-0.5 rounded text-[10px] block w-max">Fase 1</span>
-                        <h4 class="font-bold text-amber-400 text-sm">1. Interfase</h4>
-                        <p class="text-slate-300">La célula se prepara para la división. Se lleva a cabo la <strong>duplicación del ADN</strong> (replicación) y la célula aumenta de tamaño. La cromatina está en forma relajada.</p>
+                <div class="bg-slate-900 p-5 rounded-xl border border-slate-800 space-y-4">
+                    <h3 class="text-lg font-bold text-emerald-300 border-b border-slate-800 pb-2"><i class="fa-solid fa-bolt mr-2"></i>Impulso Nervioso y Sinapsis</h3>
+                    <div class="space-y-3 text-xs text-slate-300">
+                        <div class="bg-slate-800/40 p-3 rounded-lg border border-emerald-500/20">
+                            <h4 class="font-bold text-cyan-400 mb-1">Potencial de Reposo vs Acción</h4>
+                            <p><strong>Potencial de Reposo (~ -70mV):</strong> Interior cargado negativamente. Mantenido por la <em>Bomba Sodio-Potasio ($Na^+/K^+$)</em> (expulsa $3Na^+$ e ingresa $2K^+$).</p>
+                            <p class="mt-1"><strong>Potencial de Acción:</strong> Al recibir un estímulo, entran iones $Na^+$ despolarizando la membrana.</p>
+                        </div>
+                        <div class="bg-slate-800/40 p-3 rounded-lg border border-emerald-500/20">
+                            <h4 class="font-bold text-cyan-400 mb-1">Tipos de Sinapsis</h4>
+                            <p><strong>Química:</strong> Mediada por vesículas con neurotransmisores a través de la hendidura sináptica.</p>
+                            <p><strong>Eléctrica:</strong> Paso directo de iones mediante uniones en hendidura (gap junctions).</p>
+                        </div>
                     </div>
+                </div>
+            </div>
 
-                    <!-- 2. Profase -->
-                    <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-1.5">
-                        <span class="bg-emerald-900/80 text-emerald-300 font-extrabold px-2 py-0.5 rounded text-[10px] block w-max">Fase 2</span>
-                        <h4 class="font-bold text-amber-400 text-sm">2. Profase</h4>
-                        <p class="text-slate-300">La cromatina se <strong>condensa en cromosomas visibles</strong> (dos cromátidas hermanas unidas por un centrómero). Comienza a formarse el huso mitótico a partir de los centriolos que migran a los polos.</p>
+            <!-- Médula Espinal y Arco Reflejo -->
+            <div class="bg-slate-900 p-5 rounded-xl border border-slate-800 searchable-item space-y-4">
+                <h3 class="text-lg font-bold text-emerald-300 border-b border-slate-800 pb-2"><i class="fa-solid fa-diagram-project mr-2"></i>Médula Espinal y Arco Reflejo</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-slate-300">
+                    <div>
+                        <h4 class="font-semibold text-emerald-400 mb-2">Estructura de la Médula:</h4>
+                        <p class="mb-2">Posee <strong>31 pares de nervios raquídeos</strong> (8 cervicales, 12 torácicos, 5 lumbares, 5 sacros, 1 coccígeo).</p>
+                        <p>• <strong>Sustancia Gris (Central / Forma de mariposa):</strong> Contiene somas neuronales e interneuronas.</p>
+                        <p>• <strong>Sustancia Blanca (Periférica):</strong> Formada por axones mielinizados organizados en cordones.</p>
                     </div>
+                    <div>
+                        <h4 class="font-semibold text-emerald-400 mb-2">Pasos del Arco Reflejo (Respuesta Involuntaria):</h4>
+                        <ol class="list-decimal list-inside space-y-1 bg-slate-800/50 p-3 rounded-lg">
+                            <li><strong>Receptor sensorial:</strong> Capta el estímulo doloroso/físico.</li>
+                            <li><strong>Neurona Sensorial (Aferente):</strong> Lleva la señal a la sustancia gris de la médula.</li>
+                            <li><strong>Centro Integrador (Interneurona):</strong> Procesa e conmuta la señal de inmediato.</li>
+                            <li><strong>Neurona Motora (Eferente) y Efector:</strong> Lleva la orden al músculo que se contrae.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
 
-                    <!-- 3. Metafase -->
-                    <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-1.5">
-                        <span class="bg-emerald-900/80 text-emerald-300 font-extrabold px-2 py-0.5 rounded text-[10px] block w-max">Fase 3</span>
-                        <h4 class="font-bold text-amber-400 text-sm">3. Metafase</h4>
-                        <p class="text-slate-300">Los cromosomas condensados se <strong>alinean en el ecuador</strong> de la célula (placa metafásica). Las fibras del huso mitótico se conectan a los centrómeros.</p>
-                    </div>
+            <!-- Sistema Endocrino -->
+            <div class="bg-slate-900 p-5 rounded-xl border border-slate-800 searchable-item space-y-4">
+                <h3 class="text-lg font-bold text-emerald-300 border-b border-slate-800 pb-2"><i class="fa-solid fa-capsules mr-2"></i>Tabla Principal del Sistema Endocrino</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs border-collapse">
+                        <thead>
+                            <tr class="bg-slate-800 text-emerald-300 border-b border-slate-700">
+                                <th class="p-2.5">Glándula</th>
+                                <th class="p-2.5">Hormonas Producidas</th>
+                                <th class="p-2.5">Función Principal</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-800 text-slate-300">
+                            <tr><td class="p-2.5 font-bold text-cyan-400">Hipófisis / Pituitaria</td><td class="p-2.5">GH (Crecimiento), TSH, Oxitocina, Prolactina, ACTH</td><td class="p-2.5">Glándula maestra. Regula crecimiento, parto, lactancia y otras glándulas.</td></tr>
+                            <tr><td class="p-2.5 font-bold text-cyan-400">Tiroides</td><td class="p-2.5">T3 (Triyodotironina), T4 (Tiroxina), Calcitonina</td><td class="p-2.5">Regula el metabolismo basal y disminuye el calcio en sangre.</td></tr>
+                            <tr><td class="p-2.5 font-bold text-cyan-400">Paratiroides</td><td class="p-2.5">Paratohormona (PTH)</td><td class="p-2.5">Aumenta los niveles de calcio en sangre (antagonista de calcitonina).</td></tr>
+                            <tr><td class="p-2.5 font-bold text-cyan-400">Páncreas (Mixta)</td><td class="p-2.5">Insulina y Glucagón</td><td class="p-2.5">Insulina reduce glucosa sanguínea; Glucagón la eleva en ayuno.</td></tr>
+                            <tr><td class="p-2.5 font-bold text-cyan-400">Suprarrenales</td><td class="p-2.5">Cortisol, Adrenalina, Aldosterona</td><td class="p-2.5">Respuesta al estrés, control metabólico e hídrico.</td></tr>
+                            <tr><td class="p-2.5 font-bold text-cyan-400">Gónadas (Ovarios / Testículos)</td><td class="p-2.5">Estrógenos, Progesterona / Testosterona</td><td class="p-2.5">Desarrollo de caracteres sexuales secundarios y reproducción.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
-                    <!-- 4. Anafase -->
-                    <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-1.5">
-                        <span class="bg-emerald-900/80 text-emerald-300 font-extrabold px-2 py-0.5 rounded text-[10px] block w-max">Fase 4</span>
-                        <h4 class="font-bold text-amber-400 text-sm">4. Anafase</h4>
-                        <p class="text-slate-300">Las <strong>cromátidas hermanas se separan</strong> y se mueven hacia los polos opuestos de la célula tiradas por las fibras del huso. Cada una pasa a ser un cromosoma independiente.</p>
-                    </div>
-
-                    <!-- 5. Telofase -->
-                    <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-1.5">
-                        <span class="bg-emerald-900/80 text-emerald-300 font-extrabold px-2 py-0.5 rounded text-[10px] block w-max">Fase 5</span>
-                        <h4 class="font-bold text-amber-400 text-sm">5. Telofase</h4>
-                        <p class="text-slate-300">Los cromosomas llegan a los polos y se desenrollan. Reaparece la <strong>envoltura nuclear</strong> y los nucleolos alrededor de cada conjunto de cromosomas.</p>
-                    </div>
-
-                    <!-- 6. Citocinesis -->
-                    <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-1.5">
-                        <span class="bg-emerald-900/80 text-emerald-300 font-extrabold px-2 py-0.5 rounded text-[10px] block w-max">Fase 6</span>
-                        <h4 class="font-bold text-amber-400 text-sm">6. Citocinesis</h4>
-                        <p class="text-slate-300">División del citoplasma para formar dos células hijas separadas. En animales mediante un <strong>surco de división</strong>; en vegetales mediante una <strong>placa celular</strong>.</p>
-                    </div>
+            <!-- Genética -->
+            <div class="bg-slate-900 p-5 rounded-xl border border-slate-800 searchable-item space-y-3">
+                <h3 class="text-lg font-bold text-emerald-300 border-b border-slate-800 pb-2"><i class="fa-solid fa-code-branch mr-2"></i>Glosario de Genética Básica</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 text-xs">
+                    <div class="p-3 bg-slate-800/60 rounded-lg"><span class="text-emerald-400 font-bold block">ADN:</span> Ácido desoxirribonucleico, molécula que porta la información genética en doble hélice.</div>
+                    <div class="p-3 bg-slate-800/60 rounded-lg"><span class="text-emerald-400 font-bold block">Gene / Locus:</span> Unidad funcional de herencia. Locus es la posición específica en el cromosoma.</div>
+                    <div class="p-3 bg-slate-800/60 rounded-lg"><span class="text-emerald-400 font-bold block">Alelo:</span> Cada una de las variaciones alternativas de un mismo gen (Dominante A, Recesivo a).</div>
+                    <div class="p-3 bg-slate-800/60 rounded-lg"><span class="text-emerald-400 font-bold block">Genotipo vs Fenotipo:</span> Genotipo es la constitución genética (AA, Aa, aa). Fenotipo es la expresión física observable.</div>
+                    <div class="p-3 bg-slate-800/60 rounded-lg"><span class="text-emerald-400 font-bold block">Cromosomas Homólogos:</span> Par de cromosomas (uno paterno, uno materno) con similar longitud y genes. Humano: 46 (23 pares).</div>
+                    <div class="p-3 bg-slate-800/60 rounded-lg"><span class="text-emerald-400 font-bold block">Proyecto Genoma Humano:</span> Iniciativa científica que cartografió completamente los ~20,000-25,000 genes humanos.</div>
                 </div>
             </div>
         </section>
 
-        <!-- TEMA 2: CÓDIGO GENÉTICO, ADN Y ARN -->
-        <section class="bg-slate-900/90 rounded-3xl border-2 border-teal-700/60 overflow-hidden shadow-2xl">
-            <div class="bg-gradient-to-r from-teal-900 via-emerald-900 to-slate-900 px-6 py-4 text-white flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <span class="bg-emerald-400 text-slate-950 font-black text-xs w-8 h-8 rounded-full flex items-center justify-center shadow-lg">2</span>
-                    <h2 class="text-lg md:text-xl font-bold fun-font">Tema 2: Código Genético, ADN-ARN y Traducción</h2>
-                </div>
-                <i class="fa-solid fa-dna text-emerald-400 text-2xl"></i>
+        <!-- ================================================================= -->
+        <!-- TAB 2: QUÍMICA -->
+        <!-- ================================================================= -->
+        <section id="sec-quimica" class="tab-content hidden space-y-8">
+            <div class="bg-gradient-to-r from-cyan-900/40 via-slate-900 to-slate-900 p-6 rounded-2xl border border-cyan-500/30">
+                <h2 class="text-2xl font-bold text-cyan-400 mb-2"><i class="fa-solid fa-flask mr-2"></i>Química Inorgánica y Nomenclatura</h2>
+                <p class="text-slate-300 text-sm">Moléculas, tipos de fórmulas y guía sistemática completa de todas las funciones químicas inorgánicas.</p>
             </div>
 
-            <div class="p-6 space-y-6 text-xs">
+            <!-- Fórmulas y Compuestos -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 searchable-item">
+                <div class="bg-slate-900 p-5 rounded-xl border border-slate-800 space-y-3 text-xs">
+                    <h3 class="text-lg font-bold text-cyan-300 border-b border-slate-800 pb-2">Clasificación por Atomisidad</h3>
+                    <ul class="space-y-2 text-slate-300">
+                        <li><strong class="text-cyan-400">Monoatómicas:</strong> Elementos en estado fundamental ($He, Na$).</li>
+                        <li><strong class="text-cyan-400">Diatómicas:</strong> Formadas por 2 átomos ($O_2, H_2, HCl$).</li>
+                        <li><strong class="text-cyan-400">Triatómicas:</strong> 3 átomos ($O_3, H_2O, CO_2$).</li>
+                        <li><strong class="text-cyan-400">Tetraatómicas / Poliatómicas:</strong> ($P_4, NH_3, S_8$).</li>
+                    </ul>
+                </div>
 
-                <!-- Tabla Comparativa ADN vs ARN -->
-                <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-3">
-                    <h4 class="font-bold text-amber-400 text-sm">Comparación ADN vs ARN</h4>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse">
-                            <thead>
-                                <tr class="border-b border-slate-800 text-emerald-400">
-                                    <th class="p-2">Característica</th>
-                                    <th class="p-2">ADN (Ácido Desoxirribonucleico)</th>
-                                    <th class="p-2">ARN (Ácido Ribonucleico)</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-slate-800/60 text-slate-300">
-                                <tr>
-                                    <td class="p-2 font-bold text-amber-300">Bases Nitrogenadas</td>
-                                    <td class="p-2">Adenina (A), Guanina (G), Citosina (C), <strong>Timina (T)</strong></td>
-                                    <td class="p-2">Adenina (A), Guanina (G), Citosina (C), <strong>Uracilo (U)</strong></td>
-                                </tr>
-                                <tr>
-                                    <td class="p-2 font-bold text-amber-300">Azúcar</td>
-                                    <td class="p-2">Desoxirribosa</td>
-                                    <td class="p-2">Ribosa</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-2 font-bold text-amber-300">Localización</td>
-                                    <td class="p-2">Núcleo, Cloroplastos, Mitocondrias</td>
-                                    <td class="p-2">Nucleolo, Ribosomas, Citoplasma</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-2 font-bold text-amber-300">Función Utama</td>
-                                    <td class="p-2">Transmisión de características hereditarias</td>
-                                    <td class="p-2">Participación en la síntesis de proteínas</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                <div class="bg-slate-900 p-5 rounded-xl border border-slate-800 space-y-3 text-xs">
+                    <h3 class="text-lg font-bold text-cyan-300 border-b border-slate-800 pb-2">Tipos de Fórmulas Químicas</h3>
+                    <ul class="space-y-2 text-slate-300">
+                        <li><strong class="text-cyan-400">Molecular:</strong> Muestra la cantidad real de átomos ($C_6H_{12}O_6, CH_4$).</li>
+                        <li><strong class="text-cyan-400">Empírica o Mínima:</strong> Proporción entera más simple ($CH_2O$ para la glucosa).</li>
+                        <li><strong class="text-cyan-400">Estructural:</strong> Ilustra cómo están unidos gráficamente los enlaces.</li>
+                        <li><strong class="text-cyan-400">Fórmula de Lewis:</strong> Muestra los electrones de valencia como puntos o pares.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tabla Máster de Nomenclaturas e Inorgánica -->
+            <div class="bg-slate-900 p-5 rounded-xl border border-slate-800 searchable-item space-y-4">
+                <h3 class="text-lg font-bold text-cyan-300 border-b border-slate-800 pb-2"><i class="fa-solid fa-list-check mr-2"></i>Compendio de Funciones Químicas Inorgánicas</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs border-collapse">
+                        <thead>
+                            <tr class="bg-slate-800 text-cyan-300 border-b border-slate-700">
+                                <th class="p-2">Función Química</th>
+                                <th class="p-2">Estructura / Reacción</th>
+                                <th class="p-2 font-mono">Ejemplo</th>
+                                <th class="p-2">Sistemática (IUPAC)</th>
+                                <th class="p-2">Stock</th>
+                                <th class="p-2">Tradicional</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-800 text-slate-300">
+                            <!-- Óxidos Básicos -->
+                            <tr>
+                                <td class="p-2 font-bold text-emerald-400">Óxido Básico</td>
+                                <td class="p-2">Metal + Oxígeno ($O^{-2}$)</td>
+                                <td class="p-2 font-mono text-cyan-300">Fe₂O₃</td>
+                                <td class="p-2">Trióxido de dihierro</td>
+                                <td class="p-2">Óxido de hierro (III)</td>
+                                <td class="p-2">Óxido férrico</td>
+                            </tr>
+                            <!-- Óxidos Ácidos -->
+                            <tr>
+                                <td class="p-2 font-bold text-emerald-400">Óxido Ácido (Anhídrido)</td>
+                                <td class="p-2">No Metal + Oxígeno ($O^{-2}$)</td>
+                                <td class="p-2 font-mono text-cyan-300">Cl₂O₇</td>
+                                <td class="p-2">Heptóxido de dicloro</td>
+                                <td class="p-2">Óxido de cloro (VII)</td>
+                                <td class="p-2">Anhídrido perclórico</td>
+                            </tr>
+                            <!-- Peróxidos -->
+                            <tr>
+                                <td class="p-2 font-bold text-emerald-400">Peróxidos</td>
+                                <td class="p-2">Metal + Grupo Peroxo ($O_2^{-2}$)</td>
+                                <td class="p-2 font-mono text-cyan-300">H₂O₂ / Na₂O₂</td>
+                                <td class="p-2">Dióxido de dihidrógeno</td>
+                                <td class="p-2">Peróxido de hidrógeno</td>
+                                <td class="p-2">Agua oxigenada</td>
+                            </tr>
+                            <!-- Hidróxidos -->
+                            <tr>
+                                <td class="p-2 font-bold text-emerald-400">Hidróxidos (Bases)</td>
+                                <td class="p-2">Óxido básico + $H_2O \rightarrow OH^-$</td>
+                                <td class="p-2 font-mono text-cyan-300">Fe(OH)₃</td>
+                                <td class="p-2">Trihidróxido de hierro</td>
+                                <td class="p-2">Hidróxido de hierro (III)</td>
+                                <td class="p-2">Hidróxido férrico</td>
+                            </tr>
+                            <!-- Ácidos Hidrácidos -->
+                            <tr>
+                                <td class="p-2 font-bold text-emerald-400">Ácido Hidrácido</td>
+                                <td class="p-2">No Metal (VIA/VIIA) + $H^+$</td>
+                                <td class="p-2 font-mono text-cyan-300">HCl(ac) / H₂S(ac)</td>
+                                <td class="p-2">Cloruro de hidrógeno</td>
+                                <td class="p-2">Cloruro de hidrógeno</td>
+                                <td class="p-2">Ácido clorhídrico</td>
+                            </tr>
+                            <!-- Ácidos Oxácidos -->
+                            <tr>
+                                <td class="p-2 font-bold text-emerald-400">Ácido Oxácido</td>
+                                <td class="p-2">Óxido ácido + $H_2O$</td>
+                                <td class="p-2 font-mono text-cyan-300">H₂SO₄</td>
+                                <td class="p-2">Tetraoxosulfato (VI) de H</td>
+                                <td class="p-2">Ácido tetraoxosulfúrico</td>
+                                <td class="p-2">Ácido sulfúrico</td>
+                            </tr>
+                            <!-- Hidruros -->
+                            <tr>
+                                <td class="p-2 font-bold text-emerald-400">Hidruro Metálico</td>
+                                <td class="p-2">Metal + Hidrógeno ($H^{-1}$)</td>
+                                <td class="p-2 font-mono text-cyan-300">BaH₂</td>
+                                <td class="p-2">Dihidruro de bario</td>
+                                <td class="p-2">Hidruro de bario</td>
+                                <td class="p-2">Hidruro bárico</td>
+                            </tr>
+                            <!-- Sales Haloideas -->
+                            <tr>
+                                <td class="p-2 font-bold text-emerald-400">Sal Haloidea</td>
+                                <td class="p-2">Hidróxido + Hidrácido</td>
+                                <td class="p-2 font-mono text-cyan-300">NaCl</td>
+                                <td class="p-2">Monocloruro de sodio</td>
+                                <td class="p-2">Cloruro de sodio</td>
+                                <td class="p-2">Cloruro sódico</td>
+                            </tr>
+                            <!-- Sales Oxisales -->
+                            <tr>
+                                <td class="p-2 font-bold text-emerald-400">Sal Oxisal</td>
+                                <td class="p-2">Hidróxido + Oxácido</td>
+                                <td class="p-2 font-mono text-cyan-300">Ca(ClO₃)₂</td>
+                                <td class="p-2">Bis[trioxoclorato] de Ca</td>
+                                <td class="p-2">Clorato de calcio</td>
+                                <td class="p-2">Clorato cálcico</td>
+                            </tr>
+                            <!-- Sales Ácidas y Básicas -->
+                            <tr>
+                                <td class="p-2 font-bold text-emerald-400">Sal Ácida / Básica</td>
+                                <td class="p-2">Sustitución parcial de $H^+$ u $OH^-$</td>
+                                <td class="p-2 font-mono text-cyan-300">NaHCO₃ / CuOHNO₃</td>
+                                <td class="p-2">Hidrogenocarbonato de Na</td>
+                                <td class="p-2">Hidrogenocarbonato de Na</td>
+                                <td class="p-2">Bicarbonato de sodio</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================= -->
+        <!-- TAB 3: ESTRUCTURAS DE LEWIS INTERACTIVAS -->
+        <!-- ================================================================= -->
+        <section id="sec-lewis" class="tab-content hidden space-y-8">
+            <div class="bg-gradient-to-r from-purple-900/40 via-slate-900 to-slate-900 p-6 rounded-2xl border border-purple-500/30">
+                <h2 class="text-2xl font-bold text-purple-400 mb-2"><i class="fa-solid fa-atom mr-2"></i>Visualizador de Estructuras de Lewis</h2>
+                <p class="text-slate-300 text-sm">Simulación gráfica interactiva de enlaces iónicos, covalentes y regla del octeto en moléculas requeridas.</p>
+            </div>
+
+            <!-- Interactive Lewis Simulator Controls -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Molecule Selector -->
+                <div class="bg-slate-900 p-5 rounded-xl border border-slate-800 space-y-4">
+                    <h3 class="text-base font-bold text-purple-300 border-b border-slate-800 pb-2">Selecciona una Molécula:</h3>
+                    <div class="grid grid-cols-2 gap-2" id="moleculeButtons">
+                        <!-- Buttons rendered via JS -->
+                    </div>
+
+                    <div id="moleculeInfoBox" class="bg-slate-800/60 p-4 rounded-lg space-y-2 text-xs text-slate-300">
+                        <p class="font-bold text-purple-400 text-sm" id="molTitle">Agua ($H_2O$)</p>
+                        <p><strong class="text-slate-200">Tipo de Enlace:</strong> <span id="molBondType">Covalente Polar</span></p>
+                        <p><strong class="text-slate-200">Electrones de Valencia:</strong> <span id="molValence">8 e⁻ totales</span></p>
+                        <p id="molDesc" class="text-slate-400">El oxígeno comparte electrones con 2 hidrógenos, completando su octeto (8e⁻) mientras el hidrógeno completa su dueto (2e⁻).</p>
                     </div>
                 </div>
 
-                <!-- Reglas de Chargaff -->
-                <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-2">
-                    <h4 class="font-bold text-amber-400 text-sm">Reglas de Erwin Chargaff (1905-2002)</h4>
-                    <div class="bg-slate-900 p-3 rounded-xl space-y-1.5 text-slate-300">
-                        <p>• <strong>Apareamiento Complementario:</strong> La Adenina se une con Timina ($A=T$) y la Citosina con Guanina ($G=C$). En ARN, la Adenina se une con Uracilo ($A=U$).</p>
-                        <p>• <strong>Igualdad Púricas/Pirimidínicas:</strong> La suma de bases púricas ($A + G$) equivale a la suma de pirimidínicas ($T + C$), manteniendo una proporción estequiométrica 1:1 ($A + G = T + C$).</p>
-                        <p>• <strong>Variabilidad por Especie:</strong> La proporción $(A+T)$ vs $(G+C)$ varía según la especie, pero permanece constante en los tejidos de un mismo organismo independientemente de la edad o nutrición.</p>
+                <!-- Canvas Display -->
+                <div class="lg:col-span-2 bg-slate-900 p-5 rounded-xl border border-slate-800 flex flex-col items-center justify-center min-h-[350px]">
+                    <h3 class="text-sm font-semibold text-slate-400 mb-2">Diagrama Electrónico de Lewis</h3>
+                    <canvas id="lewisCanvas" width="500" height="300" class="bg-slate-950 rounded-xl border border-slate-800 max-w-full"></canvas>
+                    <div class="flex items-center gap-6 mt-4 text-xs">
+                        <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-cyan-400 inline-block"></span> Electrones Compartidos (Enlaces)</div>
+                        <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-purple-400 inline-block"></span> Pares Solitarios</div>
+                        <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-emerald-400 inline-block"></span> Transferencia Iónica</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lewis Theory Summary -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 searchable-item text-xs">
+                <div class="bg-slate-900 p-5 rounded-xl border border-slate-800 space-y-2">
+                    <h4 class="font-bold text-purple-300 text-sm">Regla del Octeto</h4>
+                    <p class="text-slate-300">Los átomos tienden a ganar, perder o compartir electrones hasta alcanzar 8 electrones en su capa de valencia (configuración estable de gas noble).</p>
+                    <p class="text-slate-400"><em>Excepción:</em> El Hidrógeno ($H$) se estabiliza con 2 electrones (regla del dueto).</p>
+                </div>
+                <div class="bg-slate-900 p-5 rounded-xl border border-slate-800 space-y-2">
+                    <h4 class="font-bold text-purple-300 text-sm">Enlace Iónico vs Covalente</h4>
+                    <p><strong class="text-purple-400">Iónico:</strong> Ocurre por transferencia de electrones entre un metal y un no metal ($\Delta EN > 1.7$). Ej: $NaCl$.</p>
+                    <p><strong class="text-purple-400">Covalente:</strong> Compartición de electrones entre no metales. Puede ser simple ($H_2O$), doble ($CO_2, O_2$) o triple ($N_2$).</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================= -->
+        <!-- TAB 4: FÍSICA FUNDAMENTAL (MRU / MRUV) -->
+        <!-- ================================================================= -->
+        <section id="sec-fisica" class="tab-content hidden space-y-8">
+            <div class="bg-gradient-to-r from-amber-900/40 via-slate-900 to-slate-900 p-6 rounded-2xl border border-amber-500/30">
+                <h2 class="text-2xl font-bold text-amber-400 mb-2"><i class="fa-solid fa-person-running mr-2"></i>Física Fundamental: MRU y MRUV</h2>
+                <p class="text-slate-300 text-sm">Ecuaciones, despejes y solucionadores calculadores interactivos paso a paso para Cinemática.</p>
+            </div>
+
+            <!-- MRU vs MRUV Comparativa Teórica -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 searchable-item">
+                <!-- MRU Card -->
+                <div class="bg-slate-900 p-5 rounded-xl border border-slate-800 space-y-3">
+                    <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+                        <h3 class="text-lg font-bold text-amber-400">MRU (Movimiento Rectilíneo Uniforme)</h3>
+                        <span class="text-xs px-2 py-0.5 bg-amber-500/20 text-amber-300 rounded">Aceleración $a = 0$</span>
+                    </div>
+                    <p class="text-xs text-slate-300">La velocidad se mantiene constante en todo momento. La distancia recorrida es directamente proporcional al tiempo.</p>
+                    <div class="bg-slate-800/60 p-3 rounded-lg text-xs space-y-2 text-amber-200 font-mono">
+                        <p><strong>Distancia:</strong> d = v · t</p>
+                        <p><strong>Velocidad:</strong> v = d / t</p>
+                        <p><strong>Tiempo:</strong> t = d / v</p>
                     </div>
                 </div>
 
-                <!-- Características del Código Genético -->
-                <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-2">
-                    <h4 class="font-bold text-amber-400 text-sm">Características Clave del Código Genético</h4>
-                    <div class="grid md:grid-cols-2 gap-3">
-                        <div class="bg-slate-900 p-3 rounded-xl">
-                            <strong class="text-emerald-300 block mb-0.5">• Triplete / Códon:</strong>
-                            <p class="text-slate-300">Cada aminoácido está codificado por un bloque de 3 nucleótidos consecutivos en el ARNm.</p>
-                        </div>
-                        <div class="bg-slate-900 p-3 rounded-xl">
-                            <strong class="text-emerald-300 block mb-0.5">• Universalidad:</strong>
-                            <p class="text-slate-300">Es casi idéntico en todos los seres vivos, desde bacterias hasta humanos.</p>
-                        </div>
-                        <div class="bg-slate-900 p-3 rounded-xl">
-                            <strong class="text-emerald-300 block mb-0.5">• Redundancia / Degenerado:</strong>
-                            <p class="text-slate-300">Existen 64 códones para solo 20 aminoácidos. Varios códones pueden codificar el mismo aminoácido (ej. UUU y UUC codifican Fenilalanina).</p>
-                        </div>
-                        <div class="bg-slate-900 p-3 rounded-xl">
-                            <strong class="text-emerald-300 block mb-0.5">• Códones de Inicio y Paro:</strong>
-                            <p class="text-slate-300"><strong>Inicio:</strong> AUG (Metionina). <br><strong>Terminación/Paro:</strong> UAA, UAG, UGA.</p>
-                        </div>
+                <!-- MRUV Card -->
+                <div class="bg-slate-900 p-5 rounded-xl border border-slate-800 space-y-3">
+                    <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+                        <h3 class="text-lg font-bold text-amber-400">MRUV (Variado)</h3>
+                        <span class="text-xs px-2 py-0.5 bg-amber-500/20 text-amber-300 rounded">Aceleración $a = \text{constante}$</span>
+                    </div>
+                    <p class="text-xs text-slate-300">La velocidad cambia uniformemente con el tiempo debido a una aceleración constante.</p>
+                    <div class="bg-slate-800/60 p-3 rounded-lg text-xs space-y-1.5 text-amber-200 font-mono">
+                        <p>1) v_f = v_i + a · t</p>
+                        <p>2) d = v_i · t + ½ · a · t²</p>
+                        <p>3) v_f² = v_i² + 2 · a · d</p>
+                        <p>4) d = ((v_i + v_f) / 2) · t</p>
                     </div>
                 </div>
+            </div>
 
-                <!-- Ejemplos Prácticos de Transcripción y Traducción -->
-                <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-3">
-                    <h4 class="font-bold text-amber-400 text-sm">Ejercicios Resueltos de Transcripción y Traducción</h4>
+            <!-- CALCULADORAS INTERACTIVAS PASO A PASO -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                <!-- Calculadora MRU -->
+                <div class="bg-slate-900 p-5 rounded-xl border border-slate-800 space-y-4">
+                    <h3 class="text-base font-bold text-amber-300 border-b border-slate-800 pb-2"><i class="fa-solid fa-calculator mr-2"></i>Calculadora / Solucionador MRU</h3>
+                    <p class="text-xs text-slate-400">Ingresa 2 datos conocidos y deja en blanco la variable que deseas calcular:</p>
                     
-                    <div class="bg-slate-900 p-3.5 rounded-xl space-y-2 font-mono text-emerald-200">
-                        <p class="text-amber-300 font-bold font-sans">Ejemplo 1:</p>
-                        <p><strong>ADN moldeo:</strong> 3'- TAC GCT ATG CGA CTT AGG ACT -5'</p>
-                        <p><strong>ARNm (5'→3'):</strong> 5'- AUG CGA UAC GCU GAA UCC UGA -3'</p>
-                        <p class="text-slate-300 font-sans mt-1"><strong>Traducción a Aminoácidos:</strong></p>
-                        <p class="text-amber-200">AUG → Metionina (Inicio) | CGA → Arginina | UAC → Tirosina | GCU → Alanina | GAA → Ácido Glutámico | UCC → Serina | UGA → ALTO (Stop)</p>
+                    <div class="space-y-3 text-xs">
+                        <div>
+                            <label class="block text-slate-300 mb-1">Distancia $d$ (m):</label>
+                            <input type="number" id="mru_d" placeholder="Ej: 100" class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-amber-300 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-slate-300 mb-1">Velocidad $v$ (m/s):</label>
+                            <input type="number" id="mru_v" placeholder="Ej: 20" class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-amber-300 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-slate-300 mb-1">Tiempo $t$ (s):</label>
+                            <input type="number" id="mru_t" placeholder="Ej: 5" class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-amber-300 focus:outline-none">
+                        </div>
+                        
+                        <div class="flex gap-2 pt-2">
+                            <button onclick="solveMRU()" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-2 rounded transition">Calcular MRU</button>
+                            <button onclick="clearMRU()" class="px-3 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded">Limpiar</button>
+                        </div>
                     </div>
 
-                    <div class="bg-slate-900 p-3.5 rounded-xl space-y-2 font-mono text-emerald-200">
-                        <p class="text-amber-300 font-bold font-sans">Ejemplo 2:</p>
-                        <p><strong>ADN:</strong> 5'- GCT ACG TGA CTC GAT CGA TGC TAG -3'</p>
-                        <p><strong>ARNm:</strong> 5'- GCU ACG UGA CUC GAU CGA UGC UAG -3'</p>
-                        <p class="text-slate-300 font-sans mt-1"><strong>Traducción:</strong></p>
-                        <p class="text-amber-200">GCU → Alanina | ACG → Treonina | UGA → ALTO (Stop) | CUC → Leucina | GAU → Ácido Aspártico | CGA → Arginina | UGC → Cisteína | UAG → ALTO (Stop)</p>
+                    <div id="mruResult" class="hidden p-3 bg-slate-800/80 rounded border border-amber-500/40 text-xs space-y-1 text-slate-200">
+                        <p class="font-bold text-amber-400" id="mruResTitle"></p>
+                        <p id="mruResFormula" class="font-mono text-cyan-300"></p>
+                        <p id="mruResProcedure" class="text-slate-300"></p>
+                    </div>
+                </div>
+
+                <!-- Calculadora MRUV -->
+                <div class="bg-slate-900 p-5 rounded-xl border border-slate-800 space-y-4">
+                    <h3 class="text-base font-bold text-amber-300 border-b border-slate-800 pb-2"><i class="fa-solid fa-gauge-high mr-2"></i>Calculadora / Solucionador MRUV</h3>
+                    <p class="text-xs text-slate-400">Ingresa 3 valores conocidos para calcular las variables restantes:</p>
+                    
+                    <div class="grid grid-cols-2 gap-2 text-xs">
+                        <div>
+                            <label class="block text-slate-300 mb-1">Velocidad Inicial $v_i$ (m/s):</label>
+                            <input type="number" id="mruv_vi" placeholder="v_i" class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-amber-300">
+                        </div>
+                        <div>
+                            <label class="block text-slate-300 mb-1">Velocidad Final $v_f$ (m/s):</label>
+                            <input type="number" id="mruv_vf" placeholder="v_f" class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-amber-300">
+                        </div>
+                        <div>
+                            <label class="block text-slate-300 mb-1">Aceleración $a$ (m/s²):</label>
+                            <input type="number" id="mruv_a" placeholder="a" class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-amber-300">
+                        </div>
+                        <div>
+                            <label class="block text-slate-300 mb-1">Tiempo $t$ (s):</label>
+                            <input type="number" id="mruv_t" placeholder="t" class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-amber-300">
+                        </div>
+                        <div class="col-span-2">
+                            <label class="block text-slate-300 mb-1">Distancia $d$ (m):</label>
+                            <input type="number" id="mruv_d" placeholder="d" class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-amber-300">
+                        </div>
+                    </div>
+
+                    <div class="flex gap-2 pt-2 text-xs">
+                        <button onclick="solveMRUV()" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-2 rounded transition">Calcular MRUV</button>
+                        <button onclick="clearMRUV()" class="px-3 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded">Limpiar</button>
+                    </div>
+
+                    <div id="mruvResult" class="hidden p-3 bg-slate-800/80 rounded border border-amber-500/40 text-xs space-y-1 text-slate-200">
+                        <p class="font-bold text-amber-400" id="mruvResTitle"></p>
+                        <p id="mruvResDetails" class="font-mono text-cyan-300 whitespace-pre-line"></p>
                     </div>
                 </div>
 
             </div>
         </section>
 
-        <!-- TEMA 3: TAXONOMÍA -->
-        <section class="bg-slate-900/90 rounded-3xl border-2 border-amber-600/60 overflow-hidden shadow-2xl">
-            <div class="bg-gradient-to-r from-amber-900 via-yellow-900 to-slate-900 px-6 py-4 text-white flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <span class="bg-emerald-400 text-slate-950 font-black text-xs w-8 h-8 rounded-full flex items-center justify-center shadow-lg">3</span>
-                    <h2 class="text-lg md:text-xl font-bold fun-font">Tema 3: Taxonomía e Historia de la Clasificación</h2>
+        <!-- ================================================================= -->
+        <!-- TAB 5: FLASHCARDS INTERACTIVAS -->
+        <!-- ================================================================= -->
+        <section id="sec-flashcards" class="tab-content hidden space-y-6">
+            <div class="bg-gradient-to-r from-pink-900/40 via-slate-900 to-slate-900 p-6 rounded-2xl border border-pink-500/30 flex justify-between items-center flex-wrap gap-4">
+                <div>
+                    <h2 class="text-2xl font-bold text-pink-400 mb-1"><i class="fa-solid fa-layer-group mr-2"></i>Tarjetas de Repaso (Flashcards)</h2>
+                    <p class="text-slate-300 text-sm">Haz clic en la tarjeta para voltearla y ver la respuesta. Utilízalas para la memoria rápida.</p>
                 </div>
-                <i class="fa-solid fa-sitemap text-emerald-400 text-2xl"></i>
+                <div class="flex gap-2 text-xs">
+                    <button onclick="filterFlashcards('todas')" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg">Todas</button>
+                    <button onclick="filterFlashcards('biologia')" class="px-3 py-1.5 bg-emerald-900/50 text-emerald-300 border border-emerald-500/40 rounded-lg">Biología</button>
+                    <button onclick="filterFlashcards('quimica')" class="px-3 py-1.5 bg-cyan-900/50 text-cyan-300 border border-cyan-500/40 rounded-lg">Química</button>
+                    <button onclick="filterFlashcards('fisica')" class="px-3 py-1.5 bg-amber-900/50 text-amber-300 border border-amber-500/40 rounded-lg">Física</button>
+                </div>
             </div>
 
-            <div class="p-6 space-y-4 text-xs">
-                <p class="text-amber-200">La taxonomía es la rama de la biología que se encarga de clasificar y organizar a los seres vivos en grupos jerárquicos basados en sus características compartidas y relaciones evolutivas.</p>
+            <!-- Cards Container Grid -->
+            <div id="flashcardGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Flashcards inject via JS -->
+            </div>
+        </section>
 
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
-                    <!-- Aristóteles -->
-                    <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-1">
-                        <span class="text-amber-400 font-bold block text-sm">Aristóteles (384-322 a.C.)</span>
-                        <p class="text-slate-300">• Creador de la primera clasificación de la historia.</p>
-                        <p class="text-slate-300">• Dividió las plantas en con flores/sin flores y a los organismos en 2 reinos: <strong>Animalia y Plantae</strong>.</p>
-                    </div>
-
-                    <!-- Carlos Linneo -->
-                    <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-1">
-                        <span class="text-amber-400 font-bold block text-sm">Carlos Linneo (1707-1778)</span>
-                        <p class="text-slate-300">• Padre de la taxonomía moderna (s. XVIII).</p>
-                        <p class="text-slate-300">• Propuso el nombre científico formal mediante la <strong>Nomenclatura Binomial</strong> (Género + especie).</p>
-                    </div>
-
-                    <!-- Ernst Haeckel -->
-                    <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-1">
-                        <span class="text-amber-400 font-bold block text-sm">Ernst Haeckel (1834-1919)</span>
-                        <p class="text-slate-300">• Propuso la creación de un tercer reino: <strong>Protista</strong>.</p>
-                        <p class="text-slate-300">• Incluyó además dentro de este grupo a los microorganismos del grupo <strong>Monera</strong>.</p>
-                    </div>
-
-                    <!-- Edouard Chatton -->
-                    <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-1">
-                        <span class="text-amber-400 font-bold block text-sm">Édouard Chatton (1883-1947)</span>
-                        <p class="text-slate-300">• Evidenció la presencia o ausencia de núcleo celular.</p>
-                        <p class="text-slate-300">• Dividió la vida en dos grandes imperios: <strong>Procariota y Eucariota</strong>.</p>
-                    </div>
-
-                    <!-- Herbert Copeland -->
-                    <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-1">
-                        <span class="text-amber-400 font-bold block text-sm">Herbert Copeland (1902-1968)</span>
-                        <p class="text-slate-300">• Propuso el esquema de <strong>4 Reinos</strong>:</p>
-                        <p class="text-slate-300">Animalia, Plantae, Protista y Monera (separando las bacterias de los protistas).</p>
-                    </div>
-
-                    <!-- Robert Whittaker -->
-                    <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-1">
-                        <span class="text-amber-400 font-bold block text-sm">Robert Whittaker (1920-1980)</span>
-                        <p class="text-slate-300">• Añadió el <strong>5to Reino: Fungi</strong> para separar a los hongos de las plantas.</p>
-                        <p class="text-slate-300">• Sistema clásico de 5 reinos: Monera, Protista, Fungi, Plantae y Animalia.</p>
-                    </div>
-
-                    <!-- Carl Woese -->
-                    <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-1">
-                        <span class="text-amber-400 font-bold block text-sm">Carl Woese (1928-2012)</span>
-                        <p class="text-slate-300">• Revolucionó la clasificación basándose en ARN ribosómico.</p>
-                        <p class="text-slate-300">• Propuso la categoría superior de <strong>3 Dominios: Bacteria, Archaea y Eukarya</strong>.</p>
-                    </div>
-
-                    <!-- Lynn Margulis -->
-                    <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-1">
-                        <span class="text-amber-400 font-bold block text-sm">Lynn Margulis (1938-2011)</span>
-                        <p class="text-slate-300">• Reorganizó y actualizó los 5 Reinos de Whittaker.</p>
-                        <p class="text-slate-300">• Monera (Bacterias), Protista (Algas y Protozoarios), Fungi, Plantae y Animalia.</p>
-                    </div>
+        <!-- ================================================================= -->
+        <!-- TAB 6: SIMULADOR DE EXAMEN -->
+        <!-- ================================================================= -->
+        <section id="sec-examen" class="tab-content hidden space-y-6">
+            <div class="bg-gradient-to-r from-red-900/40 via-slate-900 to-slate-900 p-6 rounded-2xl border border-red-500/30 flex justify-between items-center flex-wrap gap-4">
+                <div>
+                    <h2 class="text-2xl font-bold text-red-400 mb-1"><i class="fa-solid fa-clipboard-question mr-2"></i>Simulador de Examen Acumulativo</h2>
+                    <p class="text-slate-300 text-sm">Ponte a prueba con preguntas seleccionadas de las 3 materias con explicación al instante.</p>
                 </div>
+                <button onclick="resetExam()" class="px-4 py-2 bg-red-500 hover:bg-red-600 font-bold text-slate-950 rounded-lg text-xs transition">
+                    <i class="fa-solid fa-rotate-right mr-1"></i> Reiniciar Examen
+                </button>
+            </div>
+
+            <!-- Score Banner -->
+            <div id="quizScoreBanner" class="hidden bg-slate-900 p-4 rounded-xl border border-slate-800 flex justify-between items-center text-sm">
+                <div>
+                    <span class="text-slate-400">Progreso:</span>
+                    <span id="quizProgress" class="font-bold text-cyan-400 ml-2">0/10 contestadas</span>
+                </div>
+                <div>
+                    <span class="text-slate-400">Puntuación:</span>
+                    <span id="quizScore" class="font-bold text-emerald-400 ml-2">0 pts</span>
+                </div>
+            </div>
+
+            <!-- Quiz Questions Container -->
+            <div id="quizContainer" class="space-y-6">
+                <!-- Questions injected via JS -->
             </div>
         </section>
 
     </main>
 
-    <footer class="text-center py-8 text-xs text-slate-500 font-medium">
-        Biología I • Colegio Salesiano Don Bosco • ¡Éxito en el Examen Final!
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 border-t border-slate-800 py-4 text-center text-xs text-slate-500 mt-auto">
+        <p>Portal de Repaso Académico Completo • Biología, Química y Física Fundamental</p>
     </footer>
 
+    <!-- SCRIPT SECTION -->
     <script>
-        const bioQuotes = [
-            { text: '"En la transcripción, la Adenina del ADN se une al Uracilo en el ARNm"', icon: "🧬", title: "CÓDIGO GENÉTICO" },
-            { text: '"Recordar las 6 fases: Interfase, Profase, Metafase, Anafase, Telofase y Citocinesis"', icon: "🔬", title: "MITOSIS" },
-            { text: '"Linneo propuso la Nomenclatura Binomial y Whittaker añadió el Reino Fungi"', icon: "🌱", title: "TAXONOMÍA" },
-            { text: '"El códon de inicio por excelencia es AUG (Metionina)"', icon: "🎯", title: "TRADUCCIÓN" },
-            { text: '"Las reglas de Chargaff dicen que A=T y G=C con proporción 1:1"', icon: "📊", title: "REGLA DE CHARGAFF" }
-        ];
+        // =================================================================
+        // GLOBAL NAVIGATION & SEARCH
+        // =================================================================
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
 
-        function launchSpontaneousSurprise() {
-            const container = document.getElementById('toast-container');
-            const item = bioQuotes[Math.floor(Math.random() * bioQuotes.length)];
-            
-            const toast = document.createElement('div');
-            toast.className = "pop-toast bg-gradient-to-r from-emerald-600 via-teal-600 to-green-500 text-white p-3.5 rounded-2xl shadow-2xl border-2 border-emerald-300 font-bold text-xs pointer-events-auto flex items-start justify-between gap-2";
-            
-            toast.innerHTML = `
-                <div>
-                    <span class="bg-slate-950 text-emerald-300 text-[9px] font-black uppercase px-2 py-0.5 rounded-full inline-block mb-1">
-                        ${item.icon} ${item.title}
-                    </span>
-                    <p class="text-white font-extrabold italic text-xs leading-snug">${item.text}</p>
-                </div>
-                <button onclick="this.parentElement.remove()" class="text-white hover:text-slate-950 font-black text-sm">&times;</button>
-            `;
-            
-            container.appendChild(toast);
+            document.getElementById(`sec-${tabId}`).classList.remove('hidden');
+            document.getElementById(`tab-${tabId}`).classList.add('active');
 
-            setTimeout(() => {
-                if (toast.parentElement) toast.remove();
-            }, 6000);
+            if (tabId === 'lewis') {
+                renderLewisCanvas();
+            }
         }
 
-        setInterval(launchSpontaneousSurprise, 7500);
-        setTimeout(launchSpontaneousSurprise, 1500);
+        function handleGlobalSearch() {
+            const query = document.getElementById('globalSearch').value.toLowerCase().trim();
+            const items = document.querySelectorAll('.searchable-item');
+            const banner = document.getElementById('searchResultBanner');
+            const countText = document.getElementById('searchCountText');
+
+            if (query === '') {
+                banner.classList.add('hidden');
+                items.forEach(item => item.style.display = '');
+                return;
+            }
+
+            let matches = 0;
+            items.forEach(item => {
+                const text = item.textContent.toLowerCase();
+                if (text.includes(query)) {
+                    item.style.display = '';
+                    matches++;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            banner.classList.remove('hidden');
+            countText.textContent = `Resultados de búsqueda para "${query}": ${matches} elementos encontrados.`;
+        }
+
+        function clearSearch() {
+            document.getElementById('globalSearch').value = '';
+            handleGlobalSearch();
+        }
+
+        // =================================================================
+        // LEWIS STRUCTURE SIMULATION & CANVAS
+        // =================================================================
+        const moleculesData = {
+            h2o: {
+                title: "Agua (H₂O)",
+                bondType: "Covalente Polar",
+                valence: "8 e⁻ totales (O:6, H:1x2)",
+                desc: "El átomo de Oxígeno central comparte 2 pares de e⁻ con dos átomos de Hidrógeno y conserva 2 pares solitarios.",
+                draw: (ctx, w, h) => {
+                    const cx = w/2, cy = h/2;
+                    // Oxygen Center
+                    drawAtom(ctx, cx, cy, "O", "#22d3ee");
+                    // Hydrogen Left & Right
+                    drawAtom(ctx, cx - 90, cy + 30, "H", "#e2e8f0");
+                    drawAtom(ctx, cx + 90, cy + 30, "H", "#e2e8f0");
+                    // Shared Bonds (Lines + Dots)
+                    drawBond(ctx, cx, cy, cx - 90, cy + 30);
+                    drawBond(ctx, cx, cy, cx + 90, cy + 30);
+                    // Lone Pairs on O
+                    drawElectronPair(ctx, cx - 15, cy - 35, "#c084fc");
+                    drawElectronPair(ctx, cx + 15, cy - 35, "#c084fc");
+                }
+            },
+            co2: {
+                title: "Dióxido de Carbono (CO₂)",
+                bondType: "Covalente Doble no polar",
+                valence: "16 e⁻ totales",
+                desc: "El Carbono central forma enlaces dobles (4 electrones en total por enlace) con cada Oxígeno.",
+                draw: (ctx, w, h) => {
+                    const cx = w/2, cy = h/2;
+                    drawAtom(ctx, cx, cy, "C", "#38bdf8");
+                    drawAtom(ctx, cx - 120, cy, "O", "#22d3ee");
+                    drawAtom(ctx, cx + 120, cy, "O", "#22d3ee");
+                    // Double Bonds
+                    drawDoubleBond(ctx, cx - 40, cy, cx - 80, cy);
+                    drawDoubleBond(ctx, cx + 40, cy, cx + 80, cy);
+                    // Lone pairs on O
+                    drawElectronPair(ctx, cx - 130, cy - 30, "#c084fc");
+                    drawElectronPair(ctx, cx - 130, cy + 30, "#c084fc");
+                    drawElectronPair(ctx, cx + 130, cy - 30, "#c084fc");
+                    drawElectronPair(ctx, cx + 130, cy + 30, "#c084fc");
+                }
+            },
+            ch4: {
+                title: "Metano (CH₄)",
+                bondType: "Covalente Apolar (Tetraédrico)",
+                valence: "8 e⁻ totales",
+                desc: "El Carbono central comparte sus 4 electrones con 4 átomos de Hidrógeno.",
+                draw: (ctx, w, h) => {
+                    const cx = w/2, cy = h/2;
+                    drawAtom(ctx, cx, cy, "C", "#38bdf8");
+                    drawAtom(ctx, cx, cy - 80, "H", "#e2e8f0");
+                    drawAtom(ctx, cx, cy + 80, "H", "#e2e8f0");
+                    drawAtom(ctx, cx - 90, cy, "H", "#e2e8f0");
+                    drawAtom(ctx, cx + 90, cy, "H", "#e2e8f0");
+
+                    drawBond(ctx, cx, cy - 25, cx, cy - 60);
+                    drawBond(ctx, cx, cy + 25, cx, cy + 60);
+                    drawBond(ctx, cx - 25, cy, cx - 70, cy);
+                    drawBond(ctx, cx + 25, cy, cx + 70, cy);
+                }
+            },
+            nh3: {
+                title: "Amoníaco (NH₃)",
+                bondType: "Covalente Polar",
+                valence: "8 e⁻ totales",
+                desc: "El Nitrógeno forma 3 enlaces simples con H y conserva 1 par de electrones solitarios.",
+                draw: (ctx, w, h) => {
+                    const cx = w/2, cy = h/2;
+                    drawAtom(ctx, cx, cy, "N", "#a855f7");
+                    drawAtom(ctx, cx - 80, cy + 60, "H", "#e2e8f0");
+                    drawAtom(ctx, cx + 80, cy + 60, "H", "#e2e8f0");
+                    drawAtom(ctx, cx, cy + 90, "H", "#e2e8f0");
+
+                    drawBond(ctx, cx, cy, cx - 80, cy + 60);
+                    drawBond(ctx, cx, cy, cx + 80, cy + 60);
+                    drawBond(ctx, cx, cy, cx, cy + 90);
+                    // Lone pair top
+                    drawElectronPair(ctx, cx, cy - 35, "#c084fc");
+                }
+            },
+            nacl: {
+                title: "Cloruro de Sodio (NaCl)",
+                bondType: "Enlace Iónico",
+                valence: "Transferencia de 1 e⁻",
+                desc: "El Sodio (Na) cede 1 electrón de valencia al Cloro (Cl), formando los iones Na⁺ y Cl⁻.",
+                draw: (ctx, w, h) => {
+                    const cx = w/2, cy = h/2;
+                    drawAtom(ctx, cx - 100, cy, "Na⁺", "#34d399");
+                    drawAtom(ctx, cx + 100, cy, "Cl⁻", "#fbbf24");
+                    
+                    // Arrow showing transfer
+                    ctx.beginPath();
+                    ctx.strokeStyle = "#34d399";
+                    ctx.lineWidth = 3;
+                    ctx.setLineDash([5, 5]);
+                    ctx.moveTo(cx - 60, cy - 20);
+                    ctx.quadraticCurveTo(cx, cy - 60, cx + 60, cy - 20);
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+
+                    // Octet on Cl
+                    drawElectronPair(ctx, cx + 100, cy - 35, "#c084fc");
+                    drawElectronPair(ctx, cx + 100, cy + 35, "#c084fc");
+                    drawElectronPair(ctx, cx + 65, cy, "#c084fc");
+                    drawElectronPair(ctx, cx + 135, cy, "#c084fc");
+                }
+            }
+        };
+
+        let currentMolKey = 'h2o';
+
+        function initLewisSelector() {
+            const container = document.getElementById('moleculeButtons');
+            container.innerHTML = '';
+            Object.keys(moleculesData).forEach(key => {
+                const mol = moleculesData[key];
+                const btn = document.createElement('button');
+                btn.className = `p-2 text-xs font-bold rounded-lg border transition ${key === currentMolKey ? 'bg-purple-600 border-purple-400 text-white' : 'bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700'}`;
+                btn.textContent = mol.title.split(' ')[0];
+                btn.onclick = () => {
+                    currentMolKey = key;
+                    initLewisSelector();
+                    updateLewisInfo();
+                    renderLewisCanvas();
+                };
+                container.appendChild(btn);
+            });
+        }
+
+        function updateLewisInfo() {
+            const data = moleculesData[currentMolKey];
+            document.getElementById('molTitle').textContent = data.title;
+            document.getElementById('molBondType').textContent = data.bondType;
+            document.getElementById('molValence').textContent = data.valence;
+            document.getElementById('molDesc').textContent = data.desc;
+        }
+
+        function renderLewisCanvas() {
+            const canvas = document.getElementById('lewisCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (moleculesData[currentMolKey]) {
+                moleculesData[currentMolKey].draw(ctx, canvas.width, canvas.height);
+            }
+        }
+
+        // Helper Canvas Drawing Functions
+        function drawAtom(ctx, x, y, symbol, color) {
+            ctx.beginPath();
+            ctx.arc(x, y, 22, 0, Math.PI * 2);
+            ctx.fillStyle = "#1e293b";
+            ctx.fill();
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 3;
+            ctx.stroke();
+
+            ctx.fillStyle = color;
+            ctx.font = "bold 14px Inter";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText(symbol, x, y);
+        }
+
+        function drawBond(ctx, x1, y1, x2, y2) {
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.strokeStyle = "#22d3ee";
+            ctx.lineWidth = 3;
+            ctx.stroke();
+        }
+
+        function drawDoubleBond(ctx, x1, y1, x2, y2) {
+            ctx.beginPath();
+            ctx.moveTo(x1, y1 - 4);
+            ctx.lineTo(x2, y2 - 4);
+            ctx.moveTo(x1, y1 + 4);
+            ctx.lineTo(x2, y2 + 4);
+            ctx.strokeStyle = "#22d3ee";
+            ctx.lineWidth = 3;
+            ctx.stroke();
+        }
+
+        function drawElectronPair(ctx, x, y, color) {
+            ctx.beginPath();
+            ctx.arc(x - 4, y, 3, 0, Math.PI * 2);
+            ctx.arc(x + 4, y, 3, 0, Math.PI * 2);
+            ctx.fillStyle = color;
+            ctx.fill();
+        }
+
+        // =================================================================
+        // PHYSICS SOLVERS (MRU & MRUV)
+        // =================================================================
+        function solveMRU() {
+            let d = parseFloat(document.getElementById('mru_d').value);
+            let v = parseFloat(document.getElementById('mru_v').value);
+            let t = parseFloat(document.getElementById('mru_t').value);
+
+            const resDiv = document.getElementById('mruResult');
+            const title = document.getElementById('mruResTitle');
+            const formula = document.getElementById('mruResFormula');
+            const proc = document.getElementById('mruResProcedure');
+
+            resDiv.classList.remove('hidden');
+
+            if (!isNaN(v) && !isNaN(t) && isNaN(d)) {
+                d = v * t;
+                title.textContent = "Resultado: Distancia Calculada";
+                formula.textContent = "Fórmula: d = v · t";
+                proc.textContent = `d = (${v} m/s) · (${t} s) = ${d.toFixed(2)} m`;
+                document.getElementById('mru_d').value = d.toFixed(2);
+            } else if (!isNaN(d) && !isNaN(t) && isNaN(v)) {
+                if (t === 0) { alert("El tiempo no puede ser 0"); return; }
+                v = d / t;
+                title.textContent = "Resultado: Velocidad Calculada";
+                formula.textContent = "Fórmula: v = d / t";
+                proc.textContent = `v = (${d} m) / (${t} s) = ${v.toFixed(2)} m/s`;
+                document.getElementById('mru_v').value = v.toFixed(2);
+            } else if (!isNaN(d) && !isNaN(v) && isNaN(t)) {
+                if (v === 0) { alert("La velocidad no puede ser 0"); return; }
+                t = d / v;
+                title.textContent = "Resultado: Tiempo Calculado";
+                formula.textContent = "Fórmula: t = d / v";
+                proc.textContent = `t = (${d} m) / (${v} m/s) = ${t.toFixed(2)} s`;
+                document.getElementById('mru_t').value = t.toFixed(2);
+            } else {
+                title.textContent = "Campos insuficientes o ambiguos";
+                formula.textContent = "";
+                proc.textContent = "Por favor ingresa exactamente 2 valores para calcular el tercero.";
+            }
+        }
+
+        function clearMRU() {
+            document.getElementById('mru_d').value = '';
+            document.getElementById('mru_v').value = '';
+            document.getElementById('mru_t').value = '';
+            document.getElementById('mruResult').classList.add('hidden');
+        }
+
+        function solveMRUV() {
+            let vi = parseFloat(document.getElementById('mruv_vi').value);
+            let vf = parseFloat(document.getElementById('mruv_vf').value);
+            let a = parseFloat(document.getElementById('mruv_a').value);
+            let t = parseFloat(document.getElementById('mruv_t').value);
+            let d = parseFloat(document.getElementById('mruv_d').value);
+
+            const resDiv = document.getElementById('mruvResult');
+            const title = document.getElementById('mruvResTitle');
+            const details = document.getElementById('mruvResDetails');
+
+            resDiv.classList.remove('hidden');
+
+            // Caso 1: Conocidos vi, a, t -> calcular vf, d
+            if (!isNaN(vi) && !isNaN(a) && !isNaN(t)) {
+                vf = vi + a * t;
+                d = vi * t + 0.5 * a * t * t;
+                title.textContent = "Resultados Calculados:";
+                details.textContent = `Velocidad Final (v_f) = v_i + a·t = ${vi} + (${a})(${t}) = ${vf.toFixed(2)} m/s\nDistancia (d) = v_i·t + ½a·t² = ${d.toFixed(2)} m`;
+                document.getElementById('mruv_vf').value = vf.toFixed(2);
+                document.getElementById('mruv_d').value = d.toFixed(2);
+                return;
+            }
+
+            // Caso 2: Conocidos vi, vf, t -> calcular a, d
+            if (!isNaN(vi) && !isNaN(vf) && !isNaN(t)) {
+                if (t === 0) return;
+                a = (vf - vi) / t;
+                d = ((vi + vf) / 2) * t;
+                title.textContent = "Resultados Calculados:";
+                details.textContent = `Aceleración (a) = (v_f - v_i) / t = ${a.toFixed(2)} m/s²\nDistancia (d) = ((v_i + v_f)/2)·t = ${d.toFixed(2)} m`;
+                document.getElementById('mruv_a').value = a.toFixed(2);
+                document.getElementById('mruv_d').value = d.toFixed(2);
+                return;
+            }
+
+            title.textContent = "Ingresa al menos 3 datos conocidos";
+            details.textContent = "Ejemplo: Ingrese v_i, a y t para hallar v_f y d.";
+        }
+
+        function clearMRUV() {
+            document.getElementById('mruv_vi').value = '';
+            document.getElementById('mruv_vf').value = '';
+            document.getElementById('mruv_a').value = '';
+            document.getElementById('mruv_t').value = '';
+            document.getElementById('mruv_d').value = '';
+            document.getElementById('mruvResult').classList.add('hidden');
+        }
+
+        // =================================================================
+        // FLASHCARDS DATA & CONTROLLER
+        // =================================================================
+        const flashcardsData = [
+            { cat: 'biologia', q: '¿Cuál es la función del Axón en la neurona?', a: 'Transmitir el impulso eléctrico desde el soma hacia otras neuronas o células efectoras.' },
+            { cat: 'biologia', q: '¿Qué diferencia la sustancia gris de la blanca en la médula?', a: 'La sustancia gris contiene somas neuronales no mielinizados; la blanca contiene axones mielinizados.' },
+            { cat: 'biologia', q: '¿Qué glándula produce la hormona de crecimiento (GH)?', a: 'La Hipófisis o Glándula Pituitaria.' },
+            { cat: 'quimica', q: '¿Cómo se nombra un compuesto con grupo funcional -OH?', a: 'Es un Hidróxido o Base. En tradicional finaliza en -ico/-oso, en Stock con romanos.' },
+            { cat: 'quimica', q: '¿Cuál es la fórmula empírica de la Glucosa (C₆H₁₂O₆)?', a: 'CH₂O (se simplifica al mínimo entero divisor 6).' },
+            { cat: 'quimica', q: '¿Qué caracteriza a una Sal Haloidea?', a: 'Resulta de neutralizar un Hidróxido con un Ácido Hidrácido (sin oxígeno). Ej: NaCl.' },
+            { cat: 'fisica', q: '¿Cuál es la aceleración en un Movimiento Rectilíneo Uniforme (MRU)?', a: 'Es cero (a = 0), ya que la velocidad permane constante.' },
+            { cat: 'fisica', q: 'Fórmula para la velocidad final en MRUV:', a: 'v_f = v_i + a · t' }
+        ];
+
+        function renderFlashcards(filter = 'todas') {
+            const grid = document.getElementById('flashcardGrid');
+            grid.innerHTML = '';
+
+            flashcardsData.forEach((card, index) => {
+                if (filter !== 'todas' && card.cat !== filter) return;
+
+                const cardEl = document.createElement('div');
+                cardEl.className = 'perspective-1000 h-48 cursor-pointer searchable-item';
+                cardEl.innerHTML = `
+                    <div id="card-inner-${index}" onclick="flipCard(${index})" class="relative w-full h-full transform-style-3d transition-transform duration-500 rounded-xl bg-slate-900 border border-slate-800 p-5 flex items-center justify-center text-center shadow-lg hover:border-cyan-500/40">
+                        <!-- Front -->
+                        <div class="absolute inset-0 backface-hidden p-5 flex flex-col justify-between items-center">
+                            <span class="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded ${getCatBadge(card.cat)}">${card.cat}</span>
+                            <p class="font-semibold text-slate-100 text-xs sm:text-sm my-auto">${card.q}</p>
+                            <span class="text-[10px] text-slate-500"><i class="fa-solid fa-rotate mr-1"></i>Haz clic para voltear</span>
+                        </div>
+                        <!-- Back -->
+                        <div class="absolute inset-0 backface-hidden rotate-y-180 p-5 flex flex-col justify-between items-center bg-slate-850 rounded-xl border border-cyan-500/50">
+                            <span class="text-[10px] text-cyan-400 font-bold uppercase">Respuesta</span>
+                            <p class="text-xs text-slate-200 my-auto">${card.a}</p>
+                            <span class="text-[10px] text-slate-500">Volver a la pregunta</span>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(cardEl);
+            });
+        }
+
+        function getCatBadge(cat) {
+            if(cat === 'biologia') return 'bg-emerald-900/60 text-emerald-300';
+            if(cat === 'quimica') return 'bg-cyan-900/60 text-cyan-300';
+            return 'bg-amber-900/60 text-amber-300';
+        }
+
+        function flipCard(idx) {
+            const inner = document.getElementById(`card-inner-${idx}`);
+            inner.classList.toggle('rotate-y-180');
+        }
+
+        function filterFlashcards(cat) {
+            renderFlashcards(cat);
+        }
+
+        // =================================================================
+        // EXAM SIMULATION & QUIZ DATA
+        // =================================================================
+        const quizQuestions = [
+            {
+                q: "1. ¿Qué estructura celular neuronal es responsable de acelerar la transmisión del impulso mediante la conducción saltatoria?",
+                options: ["Vaina de Mielina", "Dendrita", "Cuerpos de Nissl", "Soma"],
+                correct: 0,
+                explain: "La Vaina de Mielina actúa como aislante eléctrico permitiendo que el potencial salte entre los Nódulos de Ranvier."
+            },
+            {
+                q: "2. ¿Cuál es el nombre tradicional del compuesto Fe₂O₃?",
+                options: ["Óxido ferroso", "Óxido férrico", "Trióxido de hierro", "Hidróxido de hierro"],
+                correct: 1,
+                explain: "El hierro utiliza su mayor número de oxidación (+3), por lo que en nomenclatura tradicional lleva el sufijo -ico."
+            },
+            {
+                q: "3. Un automóvil acelera de 10 m/s a 30 m/s en 5 segundos. ¿Cuál es su aceleración?",
+                options: ["2 m/s²", "4 m/s²", "6 m/s²", "8 m/s²"],
+                correct: 1,
+                explain: "a = (v_f - v_i)/t = (30 - 10)/5 = 20 / 5 = 4 m/s²."
+            },
+            {
+                q: "4. ¿Cuál de las siguientes hormonas es secretada por el Páncreas para elevar los niveles de glucosa en sangre?",
+                options: ["Insulina", "Glucagón", "Calcitonina", "Cortisol"],
+                correct: 1,
+                explain: "El Glucagón estimula la glucogenólisis hepática aumentando la glucemia en periodos de ayuno."
+            },
+            {
+                q: "5. En la nomenclatura Stock para el compuesto FeCl₃, se nombra como:",
+                options: ["Cloruro de hierro", "Cloruro de hierro (III)", "Tricloruro de hierro", "Cloruro férrico"],
+                correct: 1,
+                explain: "La nomenclatura Stock especifica el número de oxidación del elemento metálico en números romanos entre paréntesis."
+            }
+        ];
+
+        let userAnswers = {};
+
+        function renderQuiz() {
+            const container = document.getElementById('quizContainer');
+            container.innerHTML = '';
+
+            quizQuestions.forEach((qObj, qIdx) => {
+                const card = document.createElement('div');
+                card.className = 'bg-slate-900 p-5 rounded-xl border border-slate-800 space-y-3';
+                
+                let optionsHTML = '';
+                qObj.options.forEach((opt, oIdx) => {
+                    optionsHTML += `
+                        <button onclick="selectAnswer(${qIdx}, ${oIdx})" id="btn-q${qIdx}-o${oIdx}" 
+                                class="w-full text-left p-3 rounded-lg bg-slate-800/70 hover:bg-slate-800 border border-slate-700/60 text-xs text-slate-200 transition">
+                            ${opt}
+                        </button>
+                    `;
+                });
+
+                card.innerHTML = `
+                    <p class="font-bold text-slate-100 text-sm">${qObj.q}</p>
+                    <div class="space-y-2" id="options-q${qIdx}">${optionsHTML}</div>
+                    <div id="explain-q${qIdx}" class="hidden p-3 bg-slate-800/90 rounded border text-xs"></div>
+                `;
+
+                container.appendChild(card);
+            });
+            document.getElementById('quizScoreBanner').classList.remove('hidden');
+            updateQuizScore();
+        }
+
+        function selectAnswer(qIdx, oIdx) {
+            if (userAnswers[qIdx] !== undefined) return; // Prevent re-select
+
+            userAnswers[qIdx] = oIdx;
+            const qObj = quizQuestions[qIdx];
+            const explainDiv = document.getElementById(`explain-q${qIdx}`);
+
+            qObj.options.forEach((_, idx) => {
+                const btn = document.getElementById(`btn-q${qIdx}-o${idx}`);
+                if (idx === qObj.correct) {
+                    btn.classList.add('bg-emerald-900/60', 'border-emerald-500', 'text-emerald-300', 'font-bold');
+                } else if (idx === oIdx) {
+                    btn.classList.add('bg-red-900/60', 'border-red-500', 'text-red-300');
+                }
+            });
+
+            explainDiv.classList.remove('hidden');
+            if (oIdx === qObj.correct) {
+                explainDiv.classList.add('border-emerald-500/40', 'text-emerald-300');
+                explainDiv.innerHTML = `<strong class="block mb-1">¡Correcto!</strong> ${qObj.explain}`;
+            } else {
+                explainDiv.classList.add('border-red-500/40', 'text-red-300');
+                explainDiv.innerHTML = `<strong class="block mb-1">Incorrecto.</strong> ${qObj.explain}`;
+            }
+
+            updateQuizScore();
+        }
+
+        function updateQuizScore() {
+            const answeredCount = Object.keys(userAnswers).length;
+            let correctCount = 0;
+
+            Object.keys(userAnswers).forEach(qIdx => {
+                if (userAnswers[qIdx] === quizQuestions[qIdx].correct) {
+                    correctCount++;
+                }
+            });
+
+            document.getElementById('quizProgress').textContent = `${answeredCount}/${quizQuestions.length} contestadas`;
+            document.getElementById('quizScore').textContent = `${correctCount * 20} / 100 pts (${correctCount} correctas)`;
+        }
+
+        function resetExam() {
+            userAnswers = {};
+            renderQuiz();
+        }
+
+        // =================================================================
+        // INITIALIZATION
+        // =================================================================
+        window.onload = function() {
+            initLewisSelector();
+            renderLewisCanvas();
+            renderFlashcards();
+            renderQuiz();
+        };
+
+        window.onresize = function() {
+            renderLewisCanvas();
+        };
     </script>
 </body>
 </html>
+```
